@@ -1,0 +1,28 @@
+# app/views/master/ekspor_excel.xlsx.axlsx
+
+Axlsx::Package.new do |p|
+  p.workbook.add_worksheet(name: "Data Monitoring") do |sheet|
+    # Header row
+    sheet.add_row ["No.", "Tanggal", "Jam", "Suhu", "Kelembaban", "Kebisingan", "Lux", "Debu", "Amonia"]
+
+    # Data rows
+    if @data.present?
+      @no = 0
+      @data.each_with_index do |data, index|
+        sheet.add_row [
+          @no += 1,
+          data['waktu']&.to_time&.strftime("%Y-%m-%d"),
+          data['waktu']&.to_time&.strftime("%H:%M:%S"),
+          data['suhu'],
+          data['kelembaban'],
+          data['kebisingan'],
+          data['lux'],
+          data['debu'],
+          data['amonia']
+        ]
+      end
+    else
+      sheet.add_row ["Tidak ada data yang tersedia", "", "", "", "", "", "", "", ""]
+    end
+  end
+end

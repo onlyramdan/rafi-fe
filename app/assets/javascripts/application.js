@@ -1,0 +1,13 @@
+//= require jquery3
+//= require popper
+//= require bootstrap
+//= require chartkick
+//= require Chart.bundle
+//= require bootstrap-datepicker
+//= require toastr
+//= require select2
+//= require dataTables/jquery.dataTables
+//= require jquery3
+//= require jquery_ujs
+//= require sweetalert2-rails
+//= require toastr

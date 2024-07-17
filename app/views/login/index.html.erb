@@ -1,0 +1,667 @@
+<title>Login</title>
+<meta http-equiv="cache-control" content="no-store" />
+<!-- <meta http-equiv="Pragma" content="no-cache" /> -->
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta name="theme-color" content="#29487d" />
+    <%= csrf_meta_tags %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style>
+    @import 'https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400';
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #e8ded4;
+  }
+
+  .container{
+    position:absolute;
+    width: auto;
+    height:auto;
+    top: calc(50% - 240px);
+    left: calc(50% - 160px);
+    
+  }
+
+  form {
+    position: absolute;
+    text-align: center;
+    background: #ffffff;
+    width: 310px;
+    height: 470px;
+    border-radius: 5px;
+    padding: 30px 20px 0 20px;
+    box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    border-radius: 20px 20px 20px 20px;
+  }
+
+  p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #87613d;
+    margin-bottom: 40px;
+  }
+
+  p > span {
+    padding-top: 3px;
+    display: block;
+    font-weight: 400;
+    font-size: 9px;
+  }
+
+  h3 {
+    font-family: 'Dosis';
+    font-size: 35px;
+    text-transform: uppercase;
+    color: #87613d;
+    margin-bottom: 30px;
+  }
+
+  input,
+  button{
+    outline: none !important; 
+  }
+
+  button.fb {
+    border: none;
+    background: #3b5998;
+    width: 160px;
+    height: 25px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 4px;
+    border: 1px solid #29487d;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition:all 0.3s linear;
+  }
+  button.fb:hover {
+    background: #fff;
+    color: #3b5998;
+  }
+
+  button.form-btn {
+    position: absolute;
+    width: 50%;
+    height: 60px;
+    bottom: 0;
+    border: 0;
+    font-family: 'Dosis';
+    font-size: 24px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  button.form-btn.sx {
+    left: 0;
+    border-radius: 0 0 0 20px;
+    background-color: rgba(255, 125, 0, 0.35);
+    color: #fff;
+    transition:all 0.3s linear;
+  }
+
+  button.form-btn.sx:hover {
+    background-color:rgba(255, 125, 0, 0.65);
+    color: #fff;
+  }
+
+  button.form-btn.sx.back {
+    background-color: rgba(0, 0, 0, 0.15);
+    transition:all 0.3s linear;
+  }
+
+  button.form-btn.sx.back:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
+  button.form-btn.dx {
+    right: 0;
+    border-radius: 0 0 20px 0;
+    background-color: #0099ff;
+    color: #fff;
+  }
+
+  input {
+    border: none;
+    border-bottom: 1px solid #ffc185;
+    width: 85%;
+    font-family: 'Roboto';
+    color: #ff7d00;
+    text-align: center;
+    font-size: 21px;
+    font-weight:100;
+    margin-bottom:25px;
+    /* ubah bacgground input placeholder */
+    /* background-color:;  */
+  }
+
+  ::-webkit-input-placeholder {
+    color: #ffc185;
+    font-family: 'Roboto';
+    font-weight:100;
+  }
+
+  :-moz-placeholder {
+    color: #ffc185;  
+    font-family: 'Roboto';
+    font-weight:100;
+  }
+
+  ::-moz-placeholder {
+    color: #ffc185;  
+    font-family: 'Roboto';
+    font-weight:100;
+  }
+
+  :-ms-input-placeholder {  
+    color: #ffc185; 
+    font-family: 'Roboto';
+    font-weight:100;
+  }
+
+  .signIn input,
+  .signUp .w100 {
+    width: 100%;
+  }
+
+  .signIn{
+    z-index: 1;
+    transform: perspective(100px) translate3d(100px, 0px, -30px);
+    opacity: 0.5;
+  }
+
+  .signUp {
+    z-index: 2;
+  }
+
+  .active-dx{
+    animation-name: foregrounding-dx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+  }
+
+  .active-sx{
+    animation-name: foregrounding-sx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+  }
+
+  .inactive-dx{
+    animation-name: overshadowing-dx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+  }
+
+  .inactive-sx{
+    animation-name: overshadowing-sx;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes overshadowing-dx {
+    0%{
+      z-index:2;
+      transform: perspective(100px) translate3d(0px, 0px, 0px);
+      opacity: 1;
+      box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+    }
+    100%{
+      z-index: 1;
+      transform: perspective(100px) translate3d(100px, 0px, -30px);
+      opacity: 0.5;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  @keyframes overshadowing-sx {
+    0%{
+      z-index:2;
+      transform: perspective(100px) translate3d(0px, 0px, 0px);
+      opacity: 1;
+      box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+    }
+    100%{
+      z-index: 1;
+      transform: perspective(100px) translate3d(-100px, 0px, -30px);
+      opacity: 0.5;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  @keyframes foregrounding-dx {
+    0%{
+      z-index:1;
+      transform: perspective(100px) translate3d(100px, 0px, -30px);
+      opacity: 0.5;
+    }
+    50%{
+      z-index:2;
+      transform: perspective(100px) translate3d(400px, 0px, -30px);
+    }
+    100%{
+      z-index:2;
+      transform: perspective(100px) translate3d(0px, 0px, 0px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes foregrounding-sx {
+    0%{
+      z-index:1;
+      transform: perspective(100px) translate3d(-100px, 0px, -30px);
+      opacity: 0.5;
+    }
+    50%{
+      z-index:2;
+      transform: perspective(100px) translate3d(-400px, 0px, -30px);
+    }
+    100%{
+      z-index:2;
+      transform: perspective(100px) translate3d(0px, 0px, 0px);
+      opacity: 1;
+    }
+  }
+
+  /* Dark Mode */
+  .dark-mode {
+    background-color: #1f1f1f;
+    color: #fff;
+  }
+
+  .dark-mode .container {
+    border-color: #333;
+  }
+  .dark-mode-form{
+    background-color: #1f1f1f;
+  }
+
+
+  /* Light Mode */
+  .light-mode {
+    background-color: #e8ded4;
+    color: #333;
+  }
+
+  .light-mode .container {
+    border-color: #474141;
+  }
+  .theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #615d5d;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+#theme-toggle-checkbox:checked + .slider {
+  background-color: #2196F3;
+}
+
+#theme-toggle-checkbox:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  width: 40px; /* Sesuaikan ukuran ikon */
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.fa-sun{
+  position: relative;
+  right: -32px;
+  color: #f4ebeb;
+  top: 8px;
+}
+.fa-moon {
+  font-size: 20px; /* Sesuaikan ukuran ikon */
+  color: #fff; /* Sesuaikan warna ikon */
+}
+
+.fa-moon {
+  display: none;
+}
+
+#theme-toggle-checkbox:checked + .slider + .icons .fa-sun {
+  display: none;
+}
+
+#theme-toggle-checkbox:checked + .slider + .icons .fa-moon {
+  display: block;
+}
+
+#recaptcha > div {
+  margin: 0 auto .5em;
+}
+
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}
+
+
+
+
+</style>
+<div class="theme-toggle">
+  <label class="switch">
+    <input type="checkbox" id="theme-toggle-checkbox">
+    <span class="slider round"></span>
+    
+    <div class="icons">
+      <i style="left: auto; right: 100;" class="fas fa-sun"></i>
+      <i class="fas fa-moon"></i> 
+      
+    </div>
+  </label>
+</div>
+
+<div class="container" style="border-radius: 10%;">
+  <% if flash[:notice] %>
+  <div class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="closeFlash()">&times;</a>
+    <%= flash[:notice] %>
+  </div>
+  <% end %>
+  <% if flash[:success] %>
+      <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="closeFlash()">&times;</a>
+        <%= flash[:success] %>
+      </div>
+  <% end %>
+  <form class="signIn" method="POST" action="/aksi_login" >
+    <!-- <img src="/images/svipb.png"> -->
+    <div>
+      <h3 style="font-size: medium;">Silahkan</br>Login</h3>
+      <img src="/images/svipb.png" style="width: 200px; height: auto;">
+    </div>
+    <input style="labelform" id="email" name="email" type="email" placeholder="Masukkan Email" autocomplete='off' reqired />
+    <input id="password" type="password" name="password" placeholder="Masukkan Password" reqired />
+    <div class="g-recaptcha mb-2" style="z-index: 999; width:100px;" data-sitekey="6LfrFKQUAAAAAMzFobDZ7ZWy982lDxeps8cd1I2i" required="true"></div>
+    <button class="form-btn sx back" type="button">Kembali</button>
+    <button class="form-btn dx"  type="submit" id="success-toast-button"><i class="fa fa-sign-in"></i>Log In</button>
+
+  </form>
+  <form method="POST" class="signUp" action="/aksi_signup" >
+    <% if flash[:error] %>
+      <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="closeFlash()">&times;</a>
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+    <div>
+      <h3 style="font-size: medium">Silahkan buat akun</h3>
+      <img src="/images/svipb.png" style="width: 200px; height: auto;" mb-2>
+    </div>
+    <input type="nama" id="nama"  name="nama" placeholder="Masukkan Nama" required oninvalid="this.setCustomValidity('data jgn kosong y')" oninput="setCustomValidity('')" />
+    <input class="w100" id="email" name="email" type="email" placeholder="Masukkan Email" reqired autocomplete='off' />
+    <input type="password" id="password" name="password" placeholder="Masukkan Password" required />
+    <!-- <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer; z-index: 5;" onclick="togglePasswordVisibility()"></i> -->
+
+
+    <button class="form-btn sx log-in" type="submit">Login</button>
+    <button class="form-btn dx" type="submit" onclick="hashPassword()" >Daftar</button>
+    <!-- <%= button_to 'Show Success Toast', '#', class: 'btn btn-primary', id: 'success-toast-button' %> -->
+
+    <% if flash[:password_error] %>
+      <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="closeFlash()">&times;</a>
+        <%= flash[:password_error] %>
+      </div>
+    <% end %>
+  </form> 
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('success-toast-button').addEventListener('click', async function() {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast swal2-icon-success', // Menggabungkan class 'colored-toast' dan 'swal2-icon-success'
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+
+      await Toast.fire({
+        icon: 'success',
+        title: 'Success'
+      });
+    });
+  });
+
+</script> -->
+<script>
+  $(document).ready(function() {
+    // Your jQuery code here
+    $(".log-in").click(function(){
+      $(".signIn").addClass("active-dx");
+      $(".signUp").addClass("inactive-sx");
+      $(".signUp").removeClass("active-sx");
+      $(".signIn").removeClass("inactive-dx");
+    });
+
+    $(".back").click(function(){
+      $(".signUp").addClass("active-sx");
+      $(".signIn").addClass("inactive-dx");
+      $(".signIn").removeClass("active-dx");
+      $(".signUp").removeClass("inactive-sx");
+    });
+  });
+
+  $(document).ready(function() {
+    // Check user's preference from local storage
+    if (localStorage.getItem("theme") === "dark") {
+      $("body").addClass("dark-mode");
+      $("#theme-toggle-checkbox").prop("checked", true);
+    }
+
+    // Theme toggle event handler
+    $("#theme-toggle-checkbox").change(function() {
+      if ($(this).is(":checked")) {
+        $("body").addClass("dark-mode");
+        localStorage.setItem("theme", "dark");
+      } else {
+        $("body").removeClass("dark-mode");
+        localStorage.setItem("theme", "light");
+      }
+    });
+  });
+
+  
+  function closeFlash() {
+    var flashAlert = document.querySelector('.alert.alert-danger');
+     // Ganti dengan selector yang sesuai jika diperlukan.
+    if (flashAlert) {
+      flashAlert.style.display = 'none'; // Menghilangkan pesan flash saat tombol "close" diklik.
+    }
+
+    var flashAlertSuccess = document.querySelector('.alert.alert-success');
+    if (flashAlertSuccess) {
+      flashAlertSuccess.style.display = 'none'; // Menutup pesan flash dengan class 'alert-success'.
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const signUpForm = document.querySelector(".signUp");
+    const passwordInput = signUpForm.querySelector("#password");
+
+    signUpForm.addEventListener("submit", function(event) {
+      if (passwordInput.value.length < 8) {
+        event.preventDefault(); // Mencegah pengiriman formulir jika password tidak memenuhi syarat
+        const flashDiv = document.querySelector(".alert.alert-danger");
+        if (flashDiv) {
+          flashDiv.remove(); // Menghapus pesan flash sebelumnya (jika ada)
+        }
+        const errorMessage = "Password harus memiliki minimal 8 karakter.";
+        const flashNotice = document.createElement("div");
+        flashNotice.classList.add("alert", "alert-danger");
+        flashNotice.innerHTML = `
+          <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="closeFlash()">&times;</a>
+          ${errorMessage}
+        `;
+        signUpForm.appendChild(flashNotice);
+      }
+    });
+  });  
+
+  // const togglePassword = document.querySelector('#togglePassword');
+  // const password = document.querySelector('#id_password');
+
+  //   togglePassword.addEventListener('click', function (e) {
+  //     // toggle the type attribute
+  //     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+  //     password.setAttribute('type', type);
+  //     // toggle the eye slash icon
+  //     this.classList.toggle('fa-eye-slash');
+  // });
+
+  // function togglePasswordVisibility() {
+  //   var passwordInput = document.getElementById("password");
+  //   var eyeIcon = document.getElementById("togglePassword");
+
+  //   if (passwordInput.type === "password") {
+  //     passwordInput.type = "text"; // Tampilkan sebagai teks biasa
+  //     eyeIcon.classList.remove("far", "fa-eye");
+  //     eyeIcon.classList.add("far", "fa-eye-slash");
+  //   } else {
+  //     passwordInput.type = "password"; // Tampilkan sebagai password
+  //     eyeIcon.classList.remove("far", "fa-eye-slash");
+  //     eyeIcon.classList.add("far", "fa-eye");
+  //   }
+  // }
+  
+  function hashPassword() {
+    const passwordInput = document.getElementById('password');
+    const password = passwordInput.value;
+    const saltRounds = 10; // Number of salt rounds, recommended value
+
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      if (!err) {
+        // Set the hashed password as a hidden field value
+        const hiddenPasswordInput = document.createElement('input');
+        hiddenPasswordInput.type = 'hidden';
+        hiddenPasswordInput.name = 'hashed_password';
+        hiddenPasswordInput.value = hash;
+        passwordInput.parentNode.appendChild(hiddenPasswordInput);
+
+        // Clear the original password field
+        passwordInput.value = '';
+
+        // Submit the form
+        document.querySelector('.signUp').submit();
+      }
+    });
+  }
+
+</script>
+<script>
+  // Cek apakah pengguna telah berhasil login
+  if (sessionStorage.getItem('isLoggedIn') === 'true') {
+    // Jika iya, arahkan kembali ke halaman dashboard
+    window.location.href = '/master/dashboard';
+  }
+
+  // Fungsi untuk menangani submit formulir login
+  function handleLoginSubmit() {
+    // Lakukan validasi dan pengecekan login di sini
+
+    // Jika login berhasil, tandai pengguna sebagai berhasil login di sessionStorage
+    sessionStorage.setItem('isLoggedIn', 'true');
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('.signIn');
+    var recaptcha = document.querySelector('.g-recaptcha');
+    var backButton = document.querySelector('.back');
+    var submitButton = document.getElementById('success-toast-button');
+
+    function isRecaptchaVerified() {
+      return recaptcha && grecaptcha.getResponse().length !== 0;
+    }
+
+    function showAlert() {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Mohon selesaikan reCAPTCHA sebelum melanjutkan!',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      });
+    }
+
+    // Mendefinisikan fungsi untuk menangani pengecekan sebelum pengiriman formulir
+    function handleSubmit(event) {
+      if (!isRecaptchaVerified()) {
+        showAlert();
+        event.preventDefault(); // Mencegah pengiriman formulir jika reCAPTCHA tidak terverifikasi
+      }
+    }
+
+    // Menambahkan event listener untuk tombol submit
+    submitButton.addEventListener('click', handleSubmit);
+
+    // Optional: Menambahkan event listener untuk tombol kembali untuk menghapus reCAPTCHA response
+    backButton.addEventListener('click', function () {
+      grecaptcha.reset();
+    });
+  });
+</script>

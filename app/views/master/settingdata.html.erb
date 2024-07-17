@@ -1,0 +1,137 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: auto;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .card-content{
+        z-index: 1;
+    }
+
+
+
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: auto;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-3">
+    <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; "><i class='bx bxs-cog' title="Informasi"></i>Report Data</span>
+</h3>
+
+    <div class="card-content z-index-1">
+        <div class="tab-content" id="myTabcontent">
+            <div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <table>
+                            <tr>
+                                <th><img src="/images/dust2.png">Sensor PMS5001</th>
+                                <th>Pengaturan</th>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Mulai Pengambilan Data:</td>
+                                <td><input type="date" id="tanggalMulai" name="tanggalMulai"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Akhir Pengambilan Data:</td>
+                                <td><input type="date" id="tanggalAkhir" name="tanggalAkhir"></td>
+                            </tr>
+                            <tr>
+                                <td>Interval Pengambilan Data:</td>
+                                <td>
+                                    <select id="interval" name="interval">
+                                        <option value="harian">harian</option>
+                                        <option value="mingguan">1 Minggu</option>
+                                        <option value="Bulanan">1 Bulan</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Metode Pengambilan Data:</td>
+                                <td>
+                                    <input type="radio" id="metode1" name="metode" value="otomatis">
+                                    <label for="metode1">Otomatis</label>
+                                    <input type="radio" id="metode2" name="metode" value="manual">
+                                    <label for="metode2">Manual</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card-content">
+        <div class="tab-content" id="myTabcontent">
+            <div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <table>
+                            <tr>
+                                <th><img src="/images/malware_1-removebg-preview (2).png">Sensor PMS5001</th>Sensor NH3(Amonia)</th>
+                                <th>Pengaturan</th>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Mulai Pengambilan Data:</td>
+                                <td><input type="date" id="tanggalMulai" name="tanggalMulai"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Akhir Pengambilan Data:</td>
+                                <td><input type="date" id="tanggalAkhir" name="tanggalAkhir"></td>
+                            </tr>
+                            <tr>
+                                <td>Interval Pengambilan Data:</td>
+                                <td>
+                                    <select id="interval" name="interval">
+                                        <option value="harian">harian</option>
+                                        <option value="mingguan">1 Minggu</option>
+                                        <option value="Bulanan">1 Bulan</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Metode Pengambilan Data:</td>
+                                <td>
+                                    <input type="radio" id="metode1" name="metode" value="otomatis">
+                                    <label for="metode1">Otomatis</label>
+                                    <input type="radio" id="metode2" name="metode" value="manual">
+                                    <label for="metode2">Manual</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+

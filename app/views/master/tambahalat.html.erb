@@ -1,0 +1,187 @@
+<style>
+ thead tr td{
+   background-color: rgba(54, 56, 58, 0.7) !important;
+ }
+
+  fieldset label{
+    margin-left: 20px;
+  }
+  form label{
+    margin-left: 20px;
+  }
+  #data, #form {
+    scroll-margin-top: 100%;
+  }
+  @media (min-width: 768px){
+    .row input{
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .table-responsive {
+      overflow-x: auto;
+    }
+    
+    .table {
+      min-width: 100%; /* Mencegah tabel terlalu kecil */
+    }
+  /*   
+    /* Sesuaikan lebar kolom jika diperlukan */
+    .table td {
+      white-space: nowrap; /* Mencegah teks terlalu panjang wrap */
+    } */
+  }
+</style>
+
+<%# repot data %>
+<h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-2">
+  <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; "><i class='fa fa-cog' title="alat"></i> Settings Alat</span>
+</h3>
+<div class="card text-center mt-4">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <p class="nav-link active" id="dataalat-tab" data-toggle="tab" href="#dataalat" role="tab" aria-controls="dataalat" aria-selected="true" onclick="batalalat()">Alat</p>
+        </li>
+        <li class="nav-item">
+          <p class="nav-link" id="formalat-tab" data-toggle="tab" href="#formalat" role="tab" aria-controls="formalat" aria-selected="false" onclick="tabformalat ()">Form</p>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content mt-3">
+        <div class="tab-pane show active scroll" id="dataalat" role="tabpanel" aria-labelledby="dataalat-tab">
+          <div class="row">
+            <div class="col text-start">
+            <%# Table %>
+            <div class="table-responsive">
+              
+            
+              <table class="table table-hover table-bordered mx-0">
+                <thead class="thead">
+                  <tr>
+                    <td>No.</td>
+                    <td>id</td>
+                    <td>Nama Alat</td>
+                    <td>Lokasi</td>
+                    <td>Status</td>
+                    <td>Aksi</td>
+                  </tr>
+                </thead>
+                <tbody>
+                <% if @data_alat.present? 
+                  no = 0
+                %>
+                <% @data_alat.each do |alat| %>
+                  <tr>
+                    <td><%= no+= 1 %></td>
+                    <td><%= alat['id'] %></td>
+                    <td><%= alat['nama_alat'] %></td>
+                    <td><%= alat['lokasi']%></td>
+                      <% if alat['status']=="1"%>
+                      <td>Aktif</td>
+                      <% else %>
+                      <td> Tidak Aktif</td>
+                      <% end %>
+                    <td class="text-center">
+                      <button class="btnedit btn btn-sm btn-primary" id="aksi_id" onclick="editalat('<%=alat.to_json%>')" title="Edit">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <!-- <button class="btn btn-primary btn-sm" onclick="editalat('<%= alat.to_json %>')">
+                      Edit
+                      </button> -->
+                      <button class="btn btn-sm btn-danger" onclick="hapusalat('<%=alat['id'].to_json %>')" title="Hapus">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                      <!-- <button class="btn btn-danger btn-sm" onclick="hapusalat('<%= alat['id'].to_json %>')">
+                      hapus
+                      </button> -->
+                    </td>
+                  </tr>
+                  <% end %>
+                <% else %>
+                  <tr>
+                    <td class="text-center" colspan="5">Data Alat Kosong!</td>
+                  </tr>
+                </tbody>
+                <% end %>
+              </table>
+            </div>
+            <%# Akhir Table %>
+            </div>
+          </div>
+          
+        </div>
+        <div class="tab-pane" id="formalat" role="tabpanel" aria-labelledby="formalat-tab">
+          <div class="row">
+            <div class="col text-start">
+              <form id="form-data" action="/aksi_simpan" method="post">
+                <div class="mb-3">
+                  <label for="nama_alat" class="form-label ">Nama Alat</label>
+                  <input type="text" id="id_alat" class="form-control" name="id_alat" hidden>
+                  <input type="text" id="nama_alat" class="form-control" name="nama_alat">
+                </div>
+                <div class="mb-3">
+                  <label for="lokasi" class="form-label ">Lokasi</label>
+                  <input type="text" id="lokasi" class="form-control" name="lokasi">
+                </div>
+                <div class="mb-3">
+                  <label for="status_alat" class="form-label ">Status</label>
+                  <select id="status_alat" class="form-select" name="status" aria-label="Default select example">
+                    <option value="1" checked>Aktif</option>
+                    <option value="0">Tidak Aktif</option>
+                  </select>
+                  <!-- <input type="text" id="status_alat" class="form-control" name="status"> -->
+                </div>
+                <button type="submit" class="btn btn-primary" id="aksi_simpan" title="Simpan">Simpan</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+  function batalalat() {
+    $('#id_alat').val('')
+    $('#nama_alat').val('')
+    $('#lokasi').val('')
+    $('#status_alat').val('')
+    $('#dataalat-tab').tab('show');
+  }
+  function tabformalat() {
+    $('#formalat-tab').tab('show');
+  }
+
+  function editalat(data) {
+    parse = JSON.parse(data);
+    $('#id_alat').val(parse.id)
+    $('#nama_alat').val(parse.nama_alat)
+    $('#lokasi').val(parse.lokasi)
+    $('#status_alat').val(parse.status)
+
+    $('#formalat-tab').tab('show'); 
+  }
+  function hapusalat(id_alat) {
+    var id = JSON.parse(id_alat);
+    $.ajax({
+      url: '/aksi_hapusalat',
+      dataType: 'JSON',
+      type: 'POST',
+      data: {
+        "id": id,
+      },
+      success: function (res){
+        console.log(res);
+        if(res.status == true){
+        window.location.href = '/setting';
+      }},
+      error: function (res) {
+        console.log(res);
+      } 
+    })
+  }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

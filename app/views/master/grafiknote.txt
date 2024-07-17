@@ -1,0 +1,607 @@
+<!-- <script>
+
+//------------------------------------------------------------------------------------------------------------------------------------------------
+    // Chart data for Sensor Debu
+    const dataDebu = {
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+        datasets: [{
+            label: 'Sensor Debu',
+            data: [18, 12, 6, 9, 12, 3, 9],
+            backgroundColor: [
+                'rgba(255, 0, 0, 0.2)',   // Red
+                'rgba(0, 255, 0, 0.2)',   // Green
+                'rgba(0, 0, 255, 0.2)',   // Blue
+                'rgba(255, 255, 0, 0.2)', // Yellow
+                'rgba(255, 0, 255, 0.2)', // Purple
+                'rgba(0, 255, 255, 0.2)', // Cyan
+                'rgba(128, 128, 128, 0.2)' // Gray
+            ],
+            borderColor: [
+                'rgba(255, 0, 0, 1)',   // Red
+                'rgba(0, 255, 0, 1)',   // Green
+                'rgba(0, 0, 255, 1)',   // Blue
+                'rgba(255, 255, 0, 1)', // Yellow
+                'rgba(255, 0, 255, 1)', // Purple
+                'rgba(0, 255, 255, 1)', // Cyan
+                'rgba(0, 0, 0, 1)'      // Black
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration for Sensor Debu
+    const configDebu = {
+        type: 'line',
+        data: dataDebu,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Create chart for Sensor Debu
+    const lineChartDebu = new Chart(
+        document.getElementById('lineChartDebu'),
+        configDebu
+    );
+
+    // Function to download PNG for Sensor Debu
+    function downloadDebu() {
+        const imageLink = document.createElement('a');
+        const canvas = document.getElementById('lineChartDebu');
+        imageLink.href = canvas.toDataURL('image/png');
+        imageLink.download = 'chartDebu.png'; // Specify the desired filename
+        imageLink.click();
+    }
+    function downloadCSVDebu() {
+        const data2 = [
+            ['Day', 'Sensor Debu'],
+            ['Senin', 18],
+            ['Selasa', 14],
+            ['Rabu', 6],
+            ['Kamis', 9],
+            ['Jumat', 12],
+            ['Sabtu', 3],
+            ['Minggu', 9]
+        ];
+
+        // Create a CSV string
+        const csvContent = data2.map(row => row.join(',')).join('\n');
+
+        // Create a Blob containing the CSV data
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+
+        // Create a download link and trigger the download
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'chart_data.csv';
+        link.click();
+    }
+
+    // Function to download PDF for Sensor Debu
+    function downloadPDFDebu() {
+        const canvas = document.getElementById('lineChartDebu');
+        const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        let pdf = new jsPDF('landscape');
+        pdf.setFontSize(20);
+        pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+        pdf.text(15, 15, "Sensor Debu Chart")
+        pdf.save('chartDebu.pdf');
+    }
+
+    function downloadCSVDebu() {
+        const data2 = [
+            ['Day', 'Sensor Debu'],
+            ['Senin', 18],
+            ['Selasa', 14],
+            ['Rabu', 6],
+            ['Kamis', 9],
+            ['Jumat', 12],
+            ['Sabtu', 3],
+            ['Minggu', 9]
+        ];
+
+        // Create a CSV string
+        const csvContent = data2.map(row => row.join(',')).join('\n');
+
+        // Create a Blob containing the CSV data
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+
+        // Create a download link and trigger the download
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'chart_data.csv';
+        link.click();
+    }
+
+//------------------------------------------------------------------------------------------------------------------------------------------------
+
+    const dataSuhu = {
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+        datasets: [{
+            label: 'Sensor Suhu',
+            data: [18, 34, 21, 94, 12, 3, 9],
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration for Sensor Suhu
+    const configSuhu = {
+        type: 'line',
+        data: dataSuhu,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                bgColor: {
+                    backgroundColor: 'white' // Set the background color to white
+                }
+            }
+        }
+    };
+
+    // Create chart for Sensor Suhu
+    const lineChartSuhu = new Chart(
+        document.getElementById('lineChartSuhu'),
+        configSuhu
+    );
+
+    // Function to download PNG for Sensor Suhu
+    function downloadSuhu() {
+        const imageLink = document.createElement('a');
+        const canvas = document.getElementById('lineChartSuhu');
+        imageLink.href = canvas.toDataURL('image/png');
+        imageLink.download = 'chartSuhu.png'; // Specify the desired filename
+        imageLink.click();
+    }
+
+    // Function to download PDF for Sensor Suhu
+    function downloadPDFSuhu() {
+        const canvas = document.getElementById('lineChartSuhu');
+        const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        let pdf = new jsPDF('landscape');
+        pdf.setFontSize(20);
+        pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+        pdf.text(15, 15, "Sensor Suhu Chart")
+        pdf.save('chartSuhu.pdf');
+    }
+
+    function downloadCSVSuhu() {
+        const dataSuhu = [
+            ['Day', 'Sensor Suhu'],
+            ['Senin', 18],
+            ['Selasa', 14],
+            ['Rabu', 6],
+            ['Kamis', 9],
+            ['Jumat', 12],
+            ['Sabtu', 3],
+            ['Minggu', 9]
+        ];
+
+        // Create a CSV string
+        const csvContent = dataSuhu.map(row => row.join(',')).join('\n');
+
+        // Create a Blob containing the CSV data
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+
+        // Create a download link and trigger the download
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'chart_data.csv';
+        link.click();
+    }
+
+    const bgColor = {
+        id: 'bgColor',
+        beforeDraw: (chart, steps, options) => {
+            const { ctx, width, height } = chart;
+            ctx.fillStyle = options.backgroundColor;
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
+        }
+    };
+//------------------------------------------------------------------------------------------------------------------------------------------------
+    const dataKelembapan = {
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+        datasets: [{
+            label: 'Sensor Kelembapan',
+            data: [18, 34, 32, 94, 72, 3, 9],
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration for Sensor Suhu
+    const configKelembapan = {
+        type: 'line',
+        data: dataKelembapan,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                bgColor: {
+                    backgroundColor: 'white' // Set the background color to white
+                }
+            }
+        }
+    };
+
+    // Create chart for Sensor Suhu
+    const lineChartKelembapan = new Chart(
+        document.getElementById('lineChartKelembapan'),
+        configKelembapan
+    );
+
+    function downloadKelembapan() {
+    const imageLink = document.createElement('a');
+    const canvas = document.getElementById('lineChartKelembapan'); // Use the correct ID for the chart canvas
+    imageLink.href = canvas.toDataURL('image/png');
+    imageLink.download = 'chartKelembapan.png'; // Specify the desired filename
+    imageLink.click();
+}
+
+function downloadPDFKelembapan() {
+    const canvas = document.getElementById('lineChartKelembapan'); // Use the correct ID for the chart canvas
+    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+    let pdf = new jsPDF('landscape');
+    pdf.setFontSize(20);
+    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+    pdf.text(15, 15, "Sensor Kelembapan Chart")
+    pdf.save('chartKelembapan.pdf');
+}
+
+function downloadCSVKelembapan() {
+    const dataKelembapan = [
+        ['Day', 'Sensor Kelembapan'],
+        ['Senin', 60],
+        ['Selasa', 45],
+        ['Rabu', 55],
+        ['Kamis', 70],
+        ['Jumat', 50],
+        ['Sabtu', 65],
+        ['Minggu', 70]
+    ];
+
+    // Create a CSV string
+    const csvContent = dataKelembapan.map(row => row.join(',')).join('\n');
+
+    // Create a Blob containing the CSV data
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+
+    // Create a download link and trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'chart_data_kelembapan.csv'; // Specify the desired filename
+    link.click();
+}
+//------------------------------------------------------------------------------------------------------------------------------------------------
+    const dataKebisingan = {
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+        datasets: [{
+            label: 'Sensor Kebisingan',
+            data: [18, 34, 32, 94, 72, 3, 9],
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration for Sensor Kebisingan
+    const configKebisingan = {
+        type: 'line',
+        data: dataKebisingan,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                bgColor: {
+                    backgroundColor: 'white' // Set the background color to white
+                }
+            }
+        }
+    };
+
+    // Create chart for Sensor Kebisingan
+    const lineChartKebisingan = new Chart(
+        document.getElementById('lineChartKebisingan'),
+        configKebisingan
+    );
+
+    function downloadKebisingan() {
+    const imageLink = document.createElement('a');
+    const canvas = document.getElementById('lineChartKebisingan'); // Use the correct ID for the chart canvas
+    imageLink.href = canvas.toDataURL('image/png');
+    imageLink.download = 'chart_Kebisingan.png'; // Specify the desired filename
+    imageLink.click();
+}
+
+function downloadPDFKebisingan() {
+    const canvas = document.getElementById('lineChartKebisingan'); // Use the correct ID for the chart canvas
+    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+    let pdf = new jsPDF('landscape');
+    pdf.setFontSize(20);
+    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+    pdf.text(15, 15, "Sensor Kebisingan Chart")
+    pdf.save('chart_Kebisiingan.pdf');
+}
+
+function downloadCSVKebisingan() {
+    const dataKebsisingan = [
+        ['Day', 'Sensor Kebisingan'],
+        ['Senin', 60],
+        ['Selasa', 45],
+        ['Rabu', 55],
+        ['Kamis', 70],
+        ['Jumat', 50],
+        ['Sabtu', 65],
+        ['Minggu', 70]
+    ];
+
+    // Create a CSV string
+    const csvContent = dataKebisingan.map(row => row.join(',')).join('\n');
+
+    // Create a Blob containing the CSV data
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+
+    // Create a download link and trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'chart_data_Kebisingan.csv'; // Specify the desired filename
+    link.click();
+}
+//------------------------------------------------------------------------------------------------------------------------------------------------
+    const dataC02 = {
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+        datasets: [{
+            label: 'Sensor C02',
+            data: [18, 34, 32, 94, 72, 3, 9],
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration for Sensor C02
+    const configC02 = {
+        type: 'line',
+        data: dataC02,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                bgColor: {
+                    backgroundColor: 'white' // Set the background color to white
+                }
+            }
+        }
+    };
+
+    // Create chart for Sensor C02
+    const lineChartC02 = new Chart(
+        document.getElementById('lineChartC02'),
+        configC02
+    );
+
+    function downloadC02() {
+    const imageLink = document.createElement('a');
+    const canvas = document.getElementById('lineChartC02'); // Use the correct ID for the chart canvas
+    imageLink.href = canvas.toDataURL('image/png');
+    imageLink.download = 'chart_C02.png'; // Specify the desired filename
+    imageLink.click();
+}
+
+function downloadPDFC02() {
+    const canvas = document.getElementById('lineChartC02'); // Use the correct ID for the chart canvas
+    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+    let pdf = new jsPDF('landscape');
+    pdf.setFontSize(20);
+    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+    pdf.text(15, 15, "Sensor C02 Chart")
+    pdf.save('chart_Kebisiingan.pdf');
+}
+
+function downloadCSVC02() {
+    const dataKebsisingan = [
+        ['Day', 'Sensor C02'],
+        ['Senin', 60],
+        ['Selasa', 45],
+        ['Rabu', 55],
+        ['Kamis', 70],
+        ['Jumat', 50],
+        ['Sabtu', 65],
+        ['Minggu', 70]
+    ];
+
+    // Create a CSV string
+    const csvContent = dataC02.map(row => row.join(',')).join('\n');
+
+    // Create a Blob containing the CSV data
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+
+    // Create a download link and trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'chart_data_C02.csv'; // Specify the desired filename
+    link.click();
+}
+//------------------------------------------------------------------------------------------------------------------------------------------------
+    const dataCahaya = {
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+        datasets: [{
+            label: 'Sensor Cahaya',
+            data: [18, 34, 32, 94, 72, 3, 9],
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration for Sensor Cahaya
+    const configCahaya = {
+        type: 'line',
+        data: dataCahaya,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                bgColor: {
+                    backgroundColor: 'white' // Set the background color to white
+                }
+            }
+        }
+    };
+
+    // Create chart for Sensor Cahaya
+    const lineChartCahaya = new Chart(
+        document.getElementById('lineChartCahaya'),
+        configCahaya
+    );
+
+    function downloadCahaya() {
+    const imageLink = document.createElement('a');
+    const canvas = document.getElementById('lineChartCahaya'); // Use the correct ID for the chart canvas
+    imageLink.href = canvas.toDataURL('image/png');
+    imageLink.download = 'chart_Cahaya.png'; // Specify the desired filename
+    imageLink.click();
+}
+
+function downloadPDFCahaya() {
+    const canvas = document.getElementById('lineChartCahaya'); // Use the correct ID for the chart canvas
+    const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+    let pdf = new jsPDF('landscape');
+    pdf.setFontSize(20);
+    pdf.addImage(canvasImage, 'JPEG', 15, 15, 280, 150);
+    pdf.text(15, 15, "Sensor Cahaya Chart")
+    pdf.save('chart_Kebisiingan.pdf');
+}
+
+function downloadCSVCahaya() {
+    const dataKebsisingan = [
+        ['Day', 'Sensor Cahaya'],
+        ['Senin', 60],
+        ['Selasa', 45],
+        ['Rabu', 55],
+        ['Kamis', 70],
+        ['Jumat', 50],
+        ['Sabtu', 65],
+        ['Minggu', 70]
+    ];
+
+    // Create a CSV string
+    const csvContent = dataCahaya.map(row => row.join(',')).join('\n');
+
+    // Create a Blob containing the CSV data
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+
+    // Create a download link and trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'chart_data_Cahaya.csv'; // Specify the desired filename
+    link.click();
+}
+
+
+
+    // Repeat the above code block for other sensors (e.g., Suhu) with appropriate data and functions.
+</script> -->

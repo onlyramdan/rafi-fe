@@ -1,0 +1,205 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+/*     
+    .cardlist {
+        /* Misalnya, mengatur lebar ke 80% */
+        margin: 0 auto; /* Untuk membuat kontainer berada di tengah halaman */
+        padding: 20px; /* Contoh padding */
+        /* Contoh warna latar belakang */
+       /* Contoh border */
+        display: flex;
+        
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 45px;
+        background: linear-gradient(145deg, #767778, #464750);
+        box-shadow:  5px 5px 10px #939191,
+                    -5px -5px 10px #dfdfe2;
+        
+    } */
+        /* Tambahkan transisi pada elemen yang akan memiliki efek fading */
+    .nav .collapse {
+        transition: height 0.3s ease-in-out;
+    }
+    #body {
+        background-color: rgb(31, 53, 72);
+    }
+
+    /* Atur tinggi elemen menjadi nol saat tersembunyi */
+    .nav .collapse:not(.show) {
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* Atur tinggi elemen saat ditampilkan */
+    .nav .collapse.show {
+        height: auto;
+    }
+
+        /* Tambahkan efek hover pada tautan dropdown */
+    .nav .collapse.show a.nav-link:hover {
+        background-color: #12408a; /* Ganti dengan warna latar yang Anda inginkan */
+    }
+
+
+    @media (max-width: 768px) {
+        /* Ini akan berlaku saat lebar layar kurang dari atau sama dengan 768px (mode mobile) */
+        
+        /* Menyembunyikan teks "Dashboard" asli */
+        .navbar .nav-link .d-none.d-sm-inline {
+            display: none;
+        }
+
+        /* Mengatur ukuran ikon "fa fa-dashboard" dan teks baru yang ingin ditampilkan */
+        .navbar .nav-link i.fa.fa-dashboard {
+            font-size: 10px; /* Ubah ukuran ikon sesuai keinginan Anda */
+            margin-right: 5px; /* Beri sedikit margin agar ada jarak antara ikon dan teks */
+        }
+        .navbar .nav-link .mobile-text {
+            font-size: 14px; /* Ubah ukuran teks sesuai keinginan Anda */
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 250px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+     
+    @media screen and (max-width: 768px) {
+        .card img {
+            width: 200px; /* Kartu akan mengisi lebar layar penuh */
+            height: auto; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    /* gauge */
+   
+
+</style>
+<h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-3">
+    <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; ">Sensor Lux</span>
+</h3>
+
+<div id="plot1" style="justify-content-center" class="mx-2" ></div>
+<button class="btn btn-success" onclick="exportgrafikKeCSV('lux.csv')">Export data ke CSV</button>
+
+
+
+
+<div class="mx-auto" style="width: 200px ">
+    @IoT Intern MTM
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+
+    window.onload = function () {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "dark",
+        title:{
+            text: "Simple Line Chart"
+            
+            
+        },
+        data: [{        
+            type: "line",
+            indexLabelFontSize: 16,
+            dataPoints: [
+                { y: 450 },
+                { y: 414},
+                { y: 520, indexLabel: "\u2191 highest",markerColor: "red", markerType: "triangle" },
+                { y: 470 },
+                { y: 450 },
+                { y: 500 },
+                { y: 480 },
+                { y: 480 },
+                { y: 410 , indexLabel: "\u2193 lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
+                { y: 500 },
+                { y: 480 },
+                { y: 500 },
+                { y: 480 },
+                { y: 500 },
+                { y: 480 },
+                { y: 500 },
+                { y: 480 },
+                { y: 510 }
+            ]
+        }]
+    });
+    chart.render();
+
+    }
+
+    // gauge
+
+    Plotly.newPlot("chartContainer", data);
+
+    
+</script>
+<script>
+    const xArray1 = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
+    const yArray1 = [10, 12, 12,42,32,19,92];
+    
+    // Define Data
+    const data1 = [{
+      x: xArray1,
+      y: yArray1,
+      mode: "lines"
+    }];
+    
+    // Define Layout
+    const layout1 = {
+      xaxis: { autoscale: true, title: "Hari" },
+      yaxis: { autoscale: true, title: "Tingkat Kebisingan" },
+      title: "Kebisingan Grafik"
+    };
+    
+    // Display using Plotly
+    Plotly.newPlot("plot1", data1, layout1);
+
+    function exportgrafikKeCSV(filename) {
+        // Ambil data dari grafik Plotly
+        const chartData = data1[0]; // Sesuaikan dengan struktur data grafik Anda
+
+        // Persiapkan data untuk CSV
+        const csvData = [];
+
+        // Tambahkan header kolom CSV
+        csvData.push(["Hari", "Tingkat"]);
+
+        // Tambahkan data ke dalam CSV
+        for (let i = 0; i < chartData.x.length; i++) {
+            // Buat baris baru untuk setiap data
+            const rowData = [chartData.x[i], chartData.y[i]];
+
+            // Tambahkan baris ke dalam data CSV
+            csvData.push(rowData);
+        }
+
+        // Buat teks CSV dari array data
+        const csvText = csvData.map(row => row.join(',')).join('\n');
+
+        // Buat objek Blob untuk file CSV
+        const blob = new Blob([csvText], { type: 'text/csv' });
+
+        // Buat elemen anchor untuk mengunduh file CSV
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+
+        // Klik link untuk memicu unduhan
+        link.click();
+    }
+
+</script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

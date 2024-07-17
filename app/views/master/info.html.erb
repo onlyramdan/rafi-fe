@@ -1,0 +1,239 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+    .card {
+    position: relative;
+    width: 45%;
+    height: 300px;
+    background-color: #ffffff;
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    perspective: 1000px;
+    box-shadow: 0 0 0 5px #857c7c80;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card img {
+    width: 400px;
+    height: 200px;
+    fill: #333;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* overflow: ; */
+    }
+
+    .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.338);
+    }
+
+    .card__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #c3c0c0;
+    transform: rotateX(-90deg);
+    transform-origin: bottom;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card:hover .card__content {
+    transform: rotateX(0deg);
+    }
+
+    .card__title {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+    font-weight: 700;
+    }
+
+    .card:hover svg {
+    scale: 0;
+    }
+
+    .card__description {
+    margin: 10px 0 0;
+    font-size: 14px;
+    color: #777;
+    line-height: 1.4;
+    }
+
+
+    .card-container {
+        display: flex;
+        flex-direction: row; /* Untuk mengatur arahnya menjadi horizontal (samping) */
+        justify-content: center; /* Untuk mengatur card agar dimulai dari sisi kiri */
+        align-items: center; /* Untuk mengatur card secara vertikal berada di tengah */
+    }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        
+    }
+
+    .card:active {
+        transform: scale(0.95) rotateZ(1.7deg);
+    }
+    
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 250px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+     
+    @media screen and (max-width: 768px) {
+        .card img {
+            width: 200px; /* Kartu akan mengisi lebar layar penuh */
+            height: auto; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+    /* animasi loading */
+    #loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #bda6a6;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    justify-content: center;
+    z-index: 7;
+    }
+
+    @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+
+    /* Add animation to "page content" */
+    .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+    }
+
+    @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+    }
+
+    @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+    }
+
+    #myDiv {
+    display: none;
+    
+    }
+
+</style>
+<body>
+    <!-- <div id="loader"></div> -->
+    <!-- <div style="display:none;" id="myDiv" class="animate-bottom"> -->
+        <!-- <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div> -->
+        <h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-3">
+            <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; ">Informasi Alat</span>
+            <p class="lead px-2 mt-3">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit minima nostrum nisi! Perspiciatis est facilis sunt, odit harum, voluptatum ab, dolores corporis quam dignissimos quas quidem quibusdam voluptatibus facere itaque.</p>
+        </h3>
+        <!-- <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+        <button type="button" class="btn btn-primary btn-lg " id="load1" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order">Submit Order</button> -->
+
+        <div class="row justify-content-center px-4">
+            <div class="card col-md-4 col-sm-6 mb-3 mx-4" data-aos="zoom-in">
+                <p>Sensor Lux</p>
+                <img src="/images/lux.jpg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></img>
+                
+                <div class="card__content">
+                    <p class="card__title">Card Title</p>
+                    
+                    <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </div>
+            </div>
+            <div class="card col-md-4 col-sm-6 mb-3 mx-4"  data-aos="zoom-in">
+                <p>Sensor Kebisingan</p>
+                <img src="/images/Kebisingan.jpg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></img>
+                <div class="card__content">
+                    <p class="card__title">Card Title</p>
+                    <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </div>
+            </div>
+            <div class="card col-md-4 col-sm-6 mb-3 mx-4" data-aos="zoom-in">
+                <p>Sensor suhu dan dan kelembapan</p>
+                <img src="/images/dht22.jpg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></img>
+                <div class="card__content">
+                    <p class="card__title">Card Title</p>
+                    
+                    <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </div>
+            </div>
+            <div class="card col-md-4 col-sm-6 mb-3 mx-4" data-aos="zoom-in">
+                <img src="/images/svipb.png" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></img>
+                <div class="card__content">
+                    <p class="card__title">Card Title</p>
+                    <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </div>
+            </div>
+            <div class="card col-md-4 col-sm-6 mb-2 mx-4" data-aos="zoom-in">
+                <img src="/images/svipb.png" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></img>
+                <div class="card__content">
+                    <p class="card__title">Card Title</p>
+                    <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </div>
+            </div>
+            
+
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script>
+         // Fungsi untuk menampilkan konten setelah selesai memuat
+        function showContent() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+
+        // Simulasikan waktu memuat (misalnya 3 detik)
+        setTimeout(showContent, 1500);
+
+       
+    </script>
+</body>

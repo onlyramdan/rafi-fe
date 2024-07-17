@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#e5e5f7" />
+        <title>Monitoring MTM-IPB</title>
+        <!-- bootstrap 5 css -->
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+        crossorigin="anonymous"
+        />
+        <!-- BOX ICONS CSS-->
+        <link
+        href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"
+        rel="stylesheet"
+        />
+        <!-- custom css -->
+        <!-- <link rel="stylesheet" href="style.css" /> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="shortcut icon" href="/images/mtm-bg.png">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="@sweetalert2/themes/material-ui/material-ui.css">
+        <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-material-ui@4/material-ui.css" rel="stylesheet"> -->
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            background-color: #e5e5f7; 
+            
+            
+        }
+
+        .side-navbar {
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            margin-left: -300px;
+            /* index elemen content */
+            z-index: 5;
+            /* scroll bar */
+            overflow-y: hidden !important ; 
+            
+            /* background-color: #1f1c18; */
+            background: rgb(13,22,40);
+            background: linear-gradient(135deg, rgba(13,22,40,1) 0%, rgba(33,30,30,1) 44%, rgba(23,40,84,1) 71%);
+            /* background: linear-gradient(10deg, #0e2f50, #272728); */
+            box-shadow:  5px 5px 10px #5a4c4c,
+                        -5px -5px 10px #7b7b85;
+            transition: 0.5s;
+            border-radius: 0px 25px 25px 0px;
+        }
+
+        .side-navbar:hover  {
+            overflow-y: auto !important;
+        }
+    
+       
+        .nav-link.active{
+            background-color: #15b320;
+        }
+        .nav-link:focus,
+        .nav-link:hover {
+            background-color: #5d968b7d;
+            border-radius: 5px;
+            /* color: #15b320; */
+        }
+        .nav-link ul li.active>a,
+        a[aria-expanded="true"] {
+        color: #fff;
+        background: #005394;
+        }
+
+        .nav-link:target{
+            background-color: #15b320;
+        }
+        .mx-2:hover{
+            color: #d5dcd5;
+        }
+
+        .my-container {
+        transition: 0.4s;
+        }
+
+        .active-nav {
+        margin-left: 0;
+        }
+
+        /* for main section */
+        
+        .active-cont {
+        margin-left: 180px;
+        }
+
+        #menu-btn {
+        background-color: #225c72;
+        
+        color: #fff;
+        margin-left: -62px;
+        z-index: 5;
+        }
+
+        #menu-btn:hover{
+            background-color: #44505d;
+            border-style: #f1916D;
+            box-shadow: 0 0 0 5px #f1916D;
+        }
+
+        .my-container input {
+        border-radius: 2rem;
+        padding: 2px 20px;
+        }
+
+        .cardlist {
+            /* Misalnya, mengatur lebar ke 80% */
+            
+            margin: 0 auto; /* Untuk membuat kontainer berada di tengah halaman */
+            padding: 20px; /* Contoh padding */
+            /* Contoh warna latar belakang */
+        /* Contoh border */
+            display: flex;
+            /* width: 800px;
+            height: 50px; */
+            z-index: 4;
+            /* position: fixed;
+            width: 82%; */
+            flex-grow: 2;
+            /* flex-direction:row; */
+            align-items: center;
+            justify-content:center;
+            border-radius: 45px;
+            background: linear-gradient(105deg, #176B87, #053B50);
+            box-shadow:  5px 5px 10px #939191,
+                        -5px -5px 10px #dfdfe2;
+            
+        }
+
+        /* new style baru */
+        @media screen and (max-width: 768px) {
+            .side-navbar {
+                margin-left: -200px; /* Sesuaikan dengan lebar sidebar Anda */
+            }
+
+            .active-nav {
+                margin-left: 0;
+            }
+
+            .active-cont {
+                margin-left: 0;
+            }
+
+            #menu-btn {
+                margin-left: 0; /* Geser tombol menu ke kiri */
+            }
+
+            .cardlist .header img{
+                width: 50px;
+                height: auto;
+            }
+        }
+
+        
+
+        ul.demo {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* body {
+        min-height: 100vh;
+        background-color: #ebedf0;
+        } */
+
+        .my-container input {
+        border-radius: 2rem;
+        padding: 2px 20px;
+        }
+
+        .cardlist {
+            /* Misalnya, mengatur lebar ke 80% */
+            
+            margin: 0 auto; /* Untuk membuat kontainer berada di tengah halaman */
+            padding: 20px; /* Contoh padding */
+            /* Contoh warna latar belakang */
+        /* Contoh border */
+            display: flex;
+            /* width: 800px;
+            height: 50px; */
+            z-index: 4;
+            /* position: fixed;
+            width: 82%; */
+            flex-grow: 2;
+            /* flex-direction:row; */
+            align-items: center;
+            justify-content:center;
+            border-radius: 45px;
+            background: linear-gradient(105deg, #176B87, #053B50);
+            box-shadow:  5px 5px 10px #939191,
+                        -5px -5px 10px #dfdfe2;
+            
+        }
+
+        .img-header{
+            width: 190px; 
+            height: auto;
+        }
+
+        /* new style baru */
+        @media screen and (max-width: 768px) {
+            .side-navbar {
+                margin-left: -200px; /* Sesuaikan dengan lebar sidebar Anda */
+            }
+
+            .active-nav {
+                margin-left: 0;
+            }
+
+            .active-cont {
+                margin-left: 0;
+            }
+
+            #menu-btn {
+                margin-left: 0; /* Geser tombol menu ke kiri */
+            }
+
+            .cardlist .header img{
+                width: 50px;
+                height: auto;
+            }
+        }
+
+        /* Media query untuk responsifitas */
+        @media screen and (max-width: 800px) {
+            .cardlist img {
+                /* Properti untuk gambar dalam .cardlist ketika lebar layar kurang dari atau sama dengan 800px */
+                width: 120px;
+                height: 30px;
+            }
+        }
+       
+        /* .cardlist{
+            position: fixed;
+        } */
+
+
+        ul.demo {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* animasi loading */
+       
+
+
+        #myDiv {
+        display: none;
+        /* text-align: center; */
+        }
+
+        #loader-text {
+            position: absolute;
+            text-align: center;
+            font-size: 26px;
+            left: 52%;
+            display: grid;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            top: 62%;
+            color: #333; /* Atur warna teks sesuai kebutuhan */
+        }
+
+        #columns-loader {
+            column-count: 2;
+            column-gap: 25px;
+            column-rule: 2px solid #3366FF;
+        }
+
+        /* tema loader 2 */
+        .colorful {
+            position: absolute;
+            /* transform: translate(-50%, -50%); */
+            left: 50%;
+            top: 50%;
+            width: 67.2px;
+            height: 67.2px;
+            display: flex;
+            --c1: linear-gradient(#ffd82e 0 0);
+            --c2: linear-gradient(#ff6761 0 0);
+            --s: calc(100%/3) calc(100%/3);
+            background: var(--c1) 0   0 ,var(--c2) 50% 0   ,var(--c1) 100% 0,
+                    var(--c2) 0  50%,                   var(--c2) 100% 50%,
+                    var(--c1) 0 100%,var(--c2) 50% 100%,var(--c1) 100% 100%;
+            background-repeat: no-repeat;
+            animation: colorful-p30qnz 1.25s infinite alternate;
+        }
+
+        .colorful:before {
+        content: "";
+        left: 50%;
+        top: 50%;
+        width: calc(100%/3);
+        height: calc(100%/3);
+        background: #474bff;
+        animation: inherit;
+        animation-delay: 0s;
+        animation-name: colorful-9tp7np;
+        }
+
+        @keyframes colorful-p30qnz {
+        0%, 12.49% {
+            background-size: var(--s),0 0     ,0 0     ,0 0     ,0 0     ,0 0     ,0 0     ,0 0;
+        }
+
+        12.5%, 24.9% {
+            background-size: var(--s),var(--s),0 0     ,0 0     ,0 0     ,0 0     ,0 0     ,0 0;
+        }
+
+        25%, 37.4% {
+            background-size: var(--s),var(--s),var(--s),0 0     ,0 0     ,0 0     ,0 0     ,0 0;
+        }
+
+        37.5%, 49.9% {
+            background-size: var(--s),var(--s),var(--s),0 0     ,var(--s),0 0     ,0 0     ,0 0;
+        }
+
+        50%, 61.4% {
+            background-size: var(--s),var(--s),var(--s),0 0     ,var(--s),0 0     ,0 0     ,var(--s);
+        }
+
+        62.5%, 74.9% {
+            background-size: var(--s),var(--s),var(--s),0 0     ,var(--s),0 0     ,var(--s),var(--s);
+        }
+
+        75%, 86.4% {
+            background-size: var(--s),var(--s),var(--s),0 0     ,var(--s),var(--s),var(--s),var(--s);
+        }
+
+        87.5%, 100% {
+            background-size: var(--s),var(--s),var(--s),var(--s),var(--s),var(--s),var(--s),var(--s);
+        }
+        }
+
+        @keyframes colorful-9tp7np {
+        0%, 5% {
+            transform: translate(0   ,0   );
+        }
+
+        12.5% {
+            transform: translate(100%,0   );
+        }
+
+        25% {
+            transform: translate(200%,0   );
+        }
+
+        37.5% {
+            transform: translate(200%,100%);
+        }
+
+        50% {
+            transform: translate(200%,200%);
+        }
+
+        62.5% {
+            transform: translate(100%,200%);
+        }
+
+        75% {
+            transform: translate(0   ,200%);
+        }
+
+        87.5% {
+            transform: translate(0   ,100%);
+        }
+
+        95%, 100% {
+            transform: translate(100%,100%);
+        }
+        }
+
+        @media print {
+            .new-page {
+                page-break-before: always;
+            }
+            .sidebar {
+                display: none;
+            }
+            .cardlist {
+                display: none;
+            }
+            .hide-on-print {
+                display: none;
+            }
+            .nav-link{
+                display: none;
+            }
+            .card-header{
+                display: none;
+            }
+        }
+
+        /* modal */
+        /* CSS untuk modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 40%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            font-size: medium;
+        }
+
+        /* Tambahan gaya untuk tombol */
+        button {
+            padding: 5px 10px;
+            margin: 0 10px;
+        }
+
+        .centered-container {
+        display: flex;
+        justify-content: center; /* Tengah secara horizontal */
+        align-items: center; /* Tengah secara vertikal */
+        height: 100vh; /* Opsi: Untuk membuat elemen tetap di tengah layar */
+        }
+
+        a.nav-link.active {
+            background-color: green; /* Ubah warna latar belakang menjadi hijau */
+            color: white; /* Ubah warna teks menjadi putih (opsional) */
+        }
+
+
+        @media screen and (max-width: 800px) {
+            
+            .modal-content {
+                width: 70%;
+                height: 300px;
+            }
+        }
+    </style>
+
+    <body>
+        <!-- Side-Nav -->
+       
+        <div id="columns-loader">
+            <div class="margin-left=3">
+                <div class="colorful" ></div>
+            </div>
+            <div style="text-align: center;" class="mt-2">
+                <div style="display: flex; align-items: center; height: 100%; justify-content: center;" id="loader-text">Loading..</div>
+            </div>
+        </div>
+            
+            
+       
+        <div style="display:none;" id="myDiv" class="bg-temp">
+            <div
+            class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column"
+            id="sidebar"
+            >
+            <ul class="nav flex-column text-white w-100">
+            
+                <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center;" >
+                    <img src="/images/ipb.png" alt="user" width="70" height="70" class="rounded-circle mt-2"> 
+                </div>
+                <div style=" justify-content: center; align-items: center; text-align: center;" class="mb-2">IoT Monitoring</div>
+                <div style="border: 1px solid rgb(96, 88, 88); margin-top: 2;"></div>
+                
+                <li class="nav-link mt-2 mb-0 target" >
+                    <a style="text-decoration:none" href="/master/dashboard" class=" px-0 align-middle">
+                    <i class="fa fa-home " title="dashboard"></i> <span class="mx-2" >Dashboard</span></a>
+                </li>
+        
+                <li class="nav-link mt-2 mb-0 target">
+                    <a style="text-decoration:none" href="/master/index" class=" px-0 align-middle ">
+                        <i class="fa fa-users" title="Our Team"></i> <span class="mx-2">Our Team</span></a>
+                </li>
+                <!-- <li href="#" class="nav-link">
+                    <i class="bx bxs-dashboard"></i>
+                    <span class="mx-2">Home</span>
+                </li>
+                <li href="#" class="nav-link">
+                    <i class="bx bx-user-check"></i>
+                    <span class="mx-2">Profile</span>
+                </li> -->
+                <li class="nav-link mt-2 mb-0">
+                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle dropdown-toggle">
+                        <i class="fa fa-line-chart" title="Monitoring Sensor"></i> <span class="mx-2">Grafik Data</span> </a>
+                        <!-- tambah show seperti: collapse show nav flex-column ms-6" -->
+                    <ul class="collapse  flex-column demo" id="submenu1" data-bs-parent="#menu" style="list-style-type-none">
+                        <li class="w-100 mx-0">
+                            <a href="/master/grafik" class="nav-link align-middle px-0 text-white">
+                            <img src="/images/suhu1.png" alt="user" width="30" height="30" class="rounded-circle"> <span class="mx-2">DHT22</span>
+                            </a>
+                        </li>
+                        
+                        <!-- <a href="/master/grafikelembapan" class="nav-link align-middle px-0 text-white">
+                            <img src="/images/humidity1.png" alt="user" width="30" height="30" class="rounded-circle"> <span class="mx-2">Kelembapan</span>
+                        </a>
+                        </li> -->
+                        <li >
+                            <a href="/master/grafik#kebisingan-chart" class="nav-link align-middle px-0 text-white">
+                            <img src="/images/kebisingan-icon.png" alt="user" width="30" height="30" class="rounded-circle"> <span class="mx-2">Kebisingan</span>
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="/master/grafiklux" class="nav-link align-middle px-0 text-white">
+                            <img src="/images/cahaya1.png" alt="user" width="30" height="30" class="rounded-circle"> <span class="mx-2">LUX</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/master/grafik" class="nav-link align-middle px-0 text-white">
+                            <img src="/images/2co2.png" alt="user" width="30" height="30" class="rounded-circle"> <span class="mx-2">Gas Co2</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/master/grafik" class="nav-link align-middle px-0 text-white">
+                            <img src="/images/dust3.png" alt="user" width="30" height="30" class="rounded-circle"> <span class="mx-2">Debu</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+            
+                <li class="nav-link mt-2">
+                    <a style="text-decoration:none"  href="/master/info" class="px-0 align-middle">
+                    <i class="fa fa-info-circle display: inline-block;" title="Our Team"></i> <span class="mx-2 "> Informasi</span></a>
+                </li>
+            
+            
+            <% if session['sess']['role']=="admin"%>
+                <li class="nav-link mt-2">
+                    <a href="/report" class="nav-link px-0 align-middle">
+                        <i class='fa fa-file' title="Informasi"></i></i> <span class="mx-2"> Report Data</span></a>
+                </li>
+            <% end %>
+            </ul>
+        
+            <div class="dropdown pb-4 px-2 mb-3">
+                <div class="border border-dashed mb-2"></div>
+                <a href="#" class="d-flex px-0 align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/images/profile.png" alt="user" width="30" height="30" class="rounded-circle">
+                    <span class="mx-4" title="User"><%= session['sess']['nama']%></span>
+                    
+                </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <% if session['sess']['role']=="admin"%>
+                        <li><a class="dropdown-item" href="/setting">Tambah alat</a></li>
+                    
+                        <li><a class="dropdown-item" href="/user">Settings user</a></li>
+                    <% end %>
+                        <li><a class="dropdown-item" href="/master/profileakun">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    <!-- <li><a class="dropdown-item" href="/aksi_signout" id="signout-link"> <i class="fa fa-sign-in"></i> Sign out</a></li> -->
+                    <li><a class="dropdown-item" id="delete-button"> <i class="fa fa-sign-in"></i> Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Wrapper -->
+            <div class="p-1 my-container active-cont">
+            <!-- Top Nav -->
+            
+            <div class="col py-2 mx-3 isi">
+            
+                <div class="cardlist mx-3 ustify-content: center; align-items: center;">
+                    <div style=" cardlist-header flex-grow-2; display: flex; justify-content: center; align-items: center;" >
+                        <img class="img-header" src="/images/svipb.png" >
+                    </div>
+                    <a class="btn border-3 position-fixed" id="menu-btn" style="right: 50px; top: 27px; ">
+                        <i class="bx bx-menu"></i>
+                    </a>
+                    
+                    <!-- <a class="btn border-0 position-fixed" id="menu-btn"><i class="bx bx-menu"></i></a> -->
+                    
+                </div>
+                
+                
+                
+                <!-- <nav class="navbar top-navbar navbar-light bg-light px-5">
+                    <a class="btn border-0" id="menu-btn"><i class="bx bx-menu"></i></a>
+                    
+                </nav> -->
+                <div class="mx-3 px-3 mt-0 "  style="border-radius: 2%;">
+                    <!-- <%= link_to 'Delete', '#', id: 'delete-button', class: 'btn btn-danger' %> -->
+
+                    <div class="modal" id="confirmation-modal">
+                        <div class="modal-content">
+                            <div class="modal-header"><h4>Logout System <i class="fa fa-lock"></i></h4></div>
+                            <div class="centered-container">
+                                <i class="fa fa-exclamation-circle" style="font-size: 50px; color: #e0cb13;"></i>
+                            </div>
+                            <h4>Apakah Anda yakin? </h4>
+                            <p>Ingin keluar dari sistem?</p>
+                            <div class="modal-footer" style="justify-content: center; align-items: center;">
+                                <button id="confirm-button" class="btn btn-primary">Keluar</button>
+                                <button id="cancel-button" class="btn btn-danger">Batal</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-radius: 2%;">
+                        <%= yield %> 
+                    </div>
+                    
+                
+                </div>
+                <div class="mx-auto justify-content-center align-items-center" style="width: 150px; ">
+                    @IoT Intern MTM
+                </div>
+            </div>
+        </div>
+    </body>
+      <!--End Top Nav -->
+
+    <!-- bootstrap js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('delete-button').addEventListener('click', function() {
+            Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Ingin keluar dari sistem?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Tidak',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Keluar'
+            }).then((result) => {
+            if (result.isConfirmed) {
+               
+                // Add your logic here to handle the delete action, such as an AJAX request to the server.
+                window.location.href = "/aksi_signout";
+            }
+            });
+        });
+        });
+
+    </script>
+    <!-- custom js -->
+    <script>
+        var menu_btn = document.querySelector("#menu-btn");
+        var sidebar = document.querySelector("#sidebar");
+        var container = document.querySelector(".my-container");
+        menu_btn.addEventListener("click", () => {
+            sidebar.classList.toggle("active-nav");
+            container.classList.toggle("active-cont");
+        });
+
+      
+    </script>
+    <script>
+         window.onload = function () {
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, null, window.location.href);
+                // Tambahkan logika untuk mengarahkan pengguna kembali ke halaman dashboard jika diperlukan
+                if (window.location.pathname !== "/master/dashboard") {
+                window.location.replace("/master/dashboard");
+                }
+            };
+            }
+        };
+    </script>
+    <script>
+        AOS.init();
+    </script>
+   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+   <script>
+            // Fungsi untuk menampilkan konten setelah selesai memuat loader
+        function showContent() {
+            document.getElementById("columns-loader").style.display = "none";
+            document.getElementById("myDiv").style.display = "block";
+        }
+
+        // Simulasikan waktu memuat (misalnya 3 detik)
+        setTimeout(showContent, 1250);
+    </script>
+    <script>
+        // script untuk modal signout
+                // Mendapatkan elemen-elemen yang diperlukan
+        const signoutLink = document.getElementById("signout-link");
+        const modal = document.getElementById("confirmation-modal");
+        const cancelButton = document.getElementById("cancel-button");
+        const confirmButton = document.getElementById("confirm-button");
+
+        // Menampilkan modal saat tautan "Sign out" diklik
+        signoutLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            modal.style.display = "block";
+        });
+
+        // Menyembunyikan modal saat tombol "Batal" diklik
+        cancelButton.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+
+        // Handle keluar jika tombol "Keluar" diklik
+        confirmButton.addEventListener("click", function() {
+            window.location.href = "/aksi_signout";
+            // Tambahkan aksi keluar di sini, misalnya: window.location.href = "/aksi_signout";
+            // Jika Anda ingin mengarahkan pengguna ke URL tertentu setelah keluar.
+        });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
+    </li>
+   
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">...
+        <div class="row">
+            <div class="col text-start">
+              <fieldset disabled id="biodata">
+                <div class="mb-3">
+                  <label for="datanama" class="form-label ">Nama</label>
+                  <input type="text" id="datanama" class="form-control" placeholder="">
+                </div>
+                <div class="mb-3">
+                  <label for="dataemail" class="form-label ">Email</label>
+                  <input type="text" id="dataemail" class="form-control" placeholder="">
+                </div>
+                <div class="mb-3">
+                  <label for="datapassword" class="form-label">Password</label>
+                  <input type="text" id="datapassword" class="form-control" placeholder="">
+                </div>
+                <div class="mb-3">
+                  <label for="datarole" class="form-label">Role</label>
+                  <input type="text" id="datarole" class="form-control" placeholder="">
+                </div>
+              </fieldset>
+              <button class="btn btn-primary" id="aksi_id" onclick="aksi()" title="Edit">Edit</button>
+            </div>
+          </div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">...
+        <div class="tab-pane" id="form" role="tabpanel" aria-labelledby="form-tab">
+            <div class="row">
+              <div class="col text-start">
+                <form id="form-data">
+                  <div class="mb-3">
+                    <label for="nama" class="form-label ">Nama</label>
+                    <input type="text" id="id" class="form-control" name="id" hidden>
+                    <input type="text" id="nama" class="form-control" name="nama">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label ">Email</label>
+                    <input type="text" id="email" class="form-control" name="email">
+                  </div>
+                  <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="text" id="password" class="form-control" name="password">
+                  </div>
+                </form>
+                <button class="btn btn-primary" id="aksi_simpan" title="Simpan" onclick="simpan()" >Simpan</button>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+</div>
+
+<script>
+    function simpan(){
+      var data_form = $('#form-data').serialize()
+      console.log(data_form);
+      $.ajax({
+        url: '/profile/aksi_edit',
+        dataType: 'JSON',
+        type: 'POST',
+        data: data_form,
+        success: function (res){
+          console.log(res);
+          if(res.status == true){
+            window.location.href = '/aksi_signout';
+          }
+        },
+        error: function (res) {
+          console.log(res);
+        }
+      })
+    }
+    
+    function aksi(data) {
+      parse = JSON.parse(data);
+      $('#id').val(parse.id)
+      $('#nama').val(parse.nama)
+      $('#email').val(parse.email)
+      $('#password').val(parse.password)
+      $('#form-tab').tab('show'); 
+    }
+    function tabedit(data) {
+      parse = JSON.parse(data);
+      $('#id').val(parse.id)
+      $('#nama').val(parse.nama)
+      $('#email').val(parse.email)
+      $('#password').val(parse.password)
+    
+      $('#form-tab').tab('show'); 
+    }
+    
+    function batal() {
+      $('#data-tab').tab('show');
+    }
+    
+</script>

@@ -1,0 +1,312 @@
+<style>
+    .chartBox {
+        width: 200px;
+        height: 200px;
+    }
+ 
+
+    thead tr td{
+        background-color: rgba(135, 206, 250, 0.7) !important;
+    }
+    @media (max-width: 767px) {
+    .table-responsive {
+    overflow-x: auto;
+    }
+    
+    .table {
+    min-width: 100%; /* Mencegah tabel terlalu kecil */
+    }
+   
+    /* Sesuaikan lebar kolom jika diperlukan */
+    .table td {
+    white-space: nowrap; /* Mencegah teks terlalu panjang wrap */
+    } */
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js" integrity="sha512-t2JWqzirxOmR9MZKu+BMz0TNHe55G5BZ/tfTmXMlxpUY8tsTo3QMD27QGoYKZKFAraIPDhFv56HLdN11ctmiTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+
+
+<div class="card text-center mt-4">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <p class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true" onclick="batal()">Data</p>
+        </li>
+        <li class="nav-item">
+          <p class="nav-link" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report" aria-selected="false" onclick="tabreport()">Reports</p>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content mt-3">
+        <div class="tab-pane active" id="data" role="tabpanel" aria-labelledby="data-tab">
+            <div class="row">
+                
+                    <h3 class="text-small font-bold mb-2 break-words mt-3 text-blue px-3">
+                        <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; "><i class='fa fa-home' title="Informasi"></i> Grafik Realtime </span>
+                    </h3>
+                   
+                    <div class="card  mt-3 col-lg-6 col-md-6">
+                        <canvas id="debu-chart" width="300" height="150"></canvas>
+                    </div>
+                    <div class="card  mt-3 col-lg-6 col-md-6">
+                        <canvas id="co2-chart" width="300" height="150"></canvas>
+                    </div>
+                    <div class="card  mt-3 col-lg-6 col-md-6">
+                        <canvas id="kebisingan-chart" width="300" height="150"></canvas>
+                    </div>
+                    <div class="card  mt-3 col-lg-6 col-md-6">
+                        <canvas id="lux-chart" width="300" height="150"></canvas>
+                    </div>
+                    <div class="col text-start">
+                
+                    </div>
+              
+            </div>
+     
+        </div>
+        <div class="tab-pane" id="report" role="tabpanel" aria-labelledby="report-tab">
+          <div class="row">
+            <div class="col text-start">
+                <br>
+                <!-- <div class="chartBox">
+                    <canvas id="lineChartDebu"></canvas>
+                    <button class="btn btn-success" onclick="downloadDebu()">Download PNG</button>
+                    <button class="btn btn-success" onclick="downloadPDFDebu()">Download PDF</button>
+                    <button class="btn btn-success" onclick="downloadCSVDebu()">Download CSV</button>
+                </div>
+                <div class="chartBox">
+                    <canvas id="lineChartSuhu"></canvas>
+                    <button class="btn btn-success" onclick="downloadSuhu()">Download PNG</button>
+                    <button class="btn btn-success" onclick="downloadPDFSuhu()">Download PDF</button>
+                    <button class="btn btn-success" onclick="downloadCSVSuhu()">Download CSV</button>
+                </div>
+                <div class="chartBox">
+                    <canvas id="lineChartKelembapan"></canvas>
+                    <button class="btn btn-success" onclick="downloadKelembapan()">Download PNG</button>
+                    <button class="btn btn-success" onclick="downloadPDFKelembapan()">Download PDF</button>
+                    <button class="btn btn-success" onclick="downloadCSVKelembapan()">Download CSV</button>
+                </div>
+                <div class="chartBox">
+                    <canvas id="lineChartKebisingan"></canvas>
+                    <button class="btn btn-success" onclick="downloadKebisingan()">Download PNG</button>
+                    <button class="btn btn-success" onclick="downloadPDFKebisingan()">Download PDF</button>
+                    <button class="btn btn-success" onclick="downloadCSVKebisingan()">Download CSV</button>
+                </div>
+                <div class="chartBox">
+                    <canvas id="lineChartC02"></canvas>
+                    <button class="btn btn-success" onclick="downloadC02()">Download PNG</button>
+                    <button class="btn btn-success" onclick="downloadPDFC02()">Download PDF</button>
+                    <button class="btn btn-success" onclick="downloadCSVC02()">Download CSV</button>
+                </div>
+                <div class="chartBox">
+                    <canvas id="lineChartCahaya"></canvas>
+                    <button class="btn btn-success" onclick="downloadCahaya()">Download PNG</button>
+                    <button class="btn btn-success" onclick="downloadPDFCahaya()">Download PDF</button>
+                    <button class="btn btn-success" onclick="downloadCSVCahaya()">Download CSV</button>
+                </div> -->
+                <!-- <canvas id="suhu-chart" width="300" height="150"></canvas>
+                <canvas id="kelembaban-chart" width="300" height="150"></canvas> -->
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+</div>
+<script>
+    // Inisialisasi grafik suhu
+   
+    
+
+    // Inisialisasi grafik debu
+    var debuChart = new Chart(document.getElementById('debu-chart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [], // Label waktu (bisa kosong jika tidak ingin menampilkan label waktu)
+            datasets: [{
+                label: 'debu (%)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    // beginAtZero: true,
+                    suggestedMin: 40,
+                    suggestedMax: 100 // Sesuaikan dengan rentang debu Anda
+                }
+            }
+        }
+    });
+
+    var co2Chart = new Chart(document.getElementById('co2-chart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [], // Label waktu (bisa kosong jika tidak ingin menampilkan label waktu)
+            datasets: [{
+                label: 'C02 (%)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    // beginAtZero: true,
+                    suggestedMin: 40,
+                    suggestedMax: 100 // Sesuaikan dengan rentang debu Anda
+                }
+            }
+        }
+    });
+
+     // Inisialisasi grafik kebisingan
+     var kebisinganChart = new Chart(document.getElementById('kebisingan-chart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [], // Label waktu (bisa kosong jika tidak ingin menampilkan label waktu)
+            datasets: [{
+                label: 'kebisingan (dB)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    // beginAtZero: true,
+                    suggestedMin: 40,
+                    suggestedMax: 500 // Sesuaikan dengan rentang kelembaban Anda
+                }
+            },
+            cubicInterpolationMode: 'monotone' // Menggunakan mode interpolasi kubik dengan monotonisitas
+        }
+    });
+
+
+
+    var luxChart = new Chart(document.getElementById('lux-chart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: [], // Label waktu (bisa kosong jika tidak ingin menampilkan label waktu)
+            datasets: [{
+                label: 'lux (lx)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    // beginAtZero: true,
+                    suggestedMin: 30,
+                    suggestedMax: 1200 // Sesuaikan dengan rentang kelembaban Anda
+                }
+            },
+            cubicInterpolationMode: 'monotone' // Menggunakan mode interpolasi kubik dengan monotonisitas
+
+        }
+    });
+    
+
+    function getDataFromMQTT() {
+        $.ajax({
+            url: '/mqtt/sub', // Ganti URL sesuai dengan endpoint Anda
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                // Data berhasil diambil dari server MQTT
+                // const suhu = res.suhu;
+                const debu = res.debu;
+                const kebisingan = res.suara; 
+                const lux = res.lux;
+                const amonia = res.Co2;
+                console.log('Kebisingan Value:', lux);
+                // Perbarui data grafik suhu
+                // suhuChart.data.labels.push(new Date().toLocaleTimeString());
+                // suhuChart.data.datasets[0].data.push(suhu);
+                // Perbarui data grafik kelembaban
+                debuChart.data.labels.push(new Date().toLocaleTimeString());
+                debuChart.data.datasets[0].data.push(debu);
+                
+                co2Chart.data.labels.push(new Date().toLocaleTimeString());
+                co2Chart.data.datasets[0].data.push(amonia);
+                 // Perbarui data grafik kelembaban
+                kebisinganChart.data.labels.push(new Date().toLocaleTimeString());
+                kebisinganChart.data.datasets[0].data.push(kebisingan);
+
+                // Perbarui data grafik kelembaban
+                luxChart.data.labels.push(new Date().toLocaleTimeString());
+                luxChart.data.datasets[0].data.push(lux);
+
+                // Batasi jumlah data yang ditampilkan (misalnya, 10 data terbaru)
+                const maxDataPoints = 20;
+                // if (suhuChart.data.labels.length > maxDataPoints) {
+                //     suhuChart.data.labels.shift();
+                //     suhuChart.data.datasets[0].data.shift();
+                // }
+                if (debuChart.data.labels.length > maxDataPoints) {
+                    debuChart.data.labels.shift();
+                    debuChart.data.datasets[0].data.shift();
+                }
+                if (kebisinganChart.data.labels.length > maxDataPoints) {
+                    kebisinganChart.data.labels.shift();
+                    kebisinganChart.data.datasets[0].data.shift();
+                }
+                if (luxChart.data.labels.length > maxDataPoints) {
+                    luxChart.data.labels.shift();
+                    luxChart.data.datasets[0].data.shift();
+                }
+                if (co2Chart.data.labels.length > maxDataPoints) {
+                    co2Chart.data.labels.shift();
+                    co2Chart.data.datasets[0].data.shift();
+                }
+
+                // Perbarui tampilan grafik
+                // suhuChart.update();
+                debuChart.update();
+                kebisinganChart.update();
+                luxChart.update();
+                co2Chart.update();
+
+                $("#debu-val").text(`${debu} PPM`);
+                $("#kebisingan-val").text(`${kebisingan} %`);
+                $("#lux-val").text(`${lux} %`);
+                $("#co2-val").text(`${amonia} %`);
+            },
+            error: function (xhr, status, error) {
+                // Penanganan kesalahan jika ada
+                console.log(url);
+                console.error(error);
+            }
+        });
+    }
+
+    // Panggil getDataFromMQTT secara berkala (misalnya, setiap 5 detik)
+    setInterval(getDataFromMQTT, 3000);
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    function batal() {
+        $('#data-tab').tab('show');
+    }
+    function tabreport() {
+        $('#report-tab').tab('show');
+    }
+</script>

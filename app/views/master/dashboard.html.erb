@@ -1,0 +1,750 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+<style>
+
+    .card {
+        width: 40%;
+        height: 270px;
+        position: relative;
+        flex-direction: column;
+        display: flex;
+        padding: 25px;
+        background: radial-gradient(178.94% 106.41% at 26.42% , #FFF7B1 0%, rgba(255, 255, 255, 0) 71.88%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, #d1cece;
+        box-shadow: 0px 155px 62px rgba(0, 0, 0, 0.01), 0px 87px 52px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.09), 0px 10px 21px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+        /* background: radial-gradient(178.94% 106.41% at 26.42% , #817a7a 0%, rgba(117, 104, 104, 0) 71.88%) , #eeeeee;
+        box-shadow: 0px 155px 62px #cbcbcd, 0px 87px 52px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.09), 0px 10px 21px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1); */
+        border-radius: 23px;
+        transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+        cursor: pointer;
+    }
+
+    .card2 {
+        width: 90%;
+        display: none;
+        height: 150px;
+        position: relative;
+        flex-direction: column;
+        display: flex;
+        padding: 25px;
+        /* background-color: #5d5f6c ; */
+        /* background-color: #5d5f6c ; */
+        border-radius: 23px;
+        transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+        cursor: pointer;
+    }
+
+    .card:hover {
+     transform: scale(1.05);
+     /* box-shadow: 0 0 0 5px #14307c80; */
+    }
+
+    .container {
+        width: 250px;
+        height: 250px;
+        position: relative;
+        right: -35px;
+        top: -50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.7);
+        flex-direction: column;
+    }
+
+    .image-container {
+        position: absolute;
+        height: auto;
+        top: 10;
+        right: 30px;
+        max-width: 100%;
+        justify-content: center;
+
+       
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    /* dashboard card */
+    .card-header {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .card-header span:first-child {
+        word-break: break-all;
+        font-weight: 800;
+        font-size: 15px;
+        line-height: 135%;
+        color: #c0a95c;
+        justify-content: center;
+        align-content: center;
+       
+    }
+
+    .card-header span:last-child {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 135%;
+        color: #6b5c2a;
+        justify-content: center;
+        align-content: center;
+       
+    }
+
+    .temp {
+        position: absolute;
+        left: 25px;
+        bottom: 12px;
+        font-weight: 700;
+        font-size: 45px;
+        line-height: 77px;
+        color: #16243a;
+        text-align: center;
+    }
+
+    .temp-scale {
+        width: 20%;
+        height: 36px;
+        position: absolute;
+        right: 25px;
+        bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2b456e;
+        border-radius: 9px;
+        text-align: center;
+    }
+
+    .temp-scale span {
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 134.49%;
+        color: #c0a95c;
+    }
+
+    @media screen and (max-width: 400px) {
+        .card {
+            width: 130px; /* Kartu akan mengisi lebar layar penuh */
+            height: 1500px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    @media screen and (max-width: 815px) {
+        .card {
+            width: 230px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    @media screen and (max-width: 815px) {
+        .img .card-header {
+            width: 250px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    @media screen and (max-width: 815px) {
+        .image-container {
+            width: 200px; /* Kartu akan mengisi lebar layar penuh */
+            height: auto; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .temp{
+            font-size: 25px;
+        }
+    }
+
+    /* cuaca */
+   
+    .weather-input {
+        width: 550px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .weather-input input {
+        height: 46px;
+        width: 75%;
+        outline: none;
+        font-size: 1.07rem;
+        padding: 0 17px;
+        margin: 10px 5px 40px 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+    .weather-input input:focus {
+        padding: 0 16px;
+        border: 2px solid #5372F0;
+    }
+    .weather-input .separator {
+        height: 1px;
+        width: 100%;
+        margin: 25px 0;
+        background: #BBBBBB;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .weather-input .separator::before{
+        content: "or";
+        color: #5d5f6c;
+        font-size: 1.18rem;
+        padding: 0 15px;
+        margin-top: -4px;
+        background: #E3F2FD;
+    }
+    .weather-input button {
+        width: 75%;
+        padding: 10px 0;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: #fff;
+        background: #5d5f6c;
+        transition: 0.2s ease;
+        justify-content: center;
+        align-items: center;
+    }
+    .weather-input .search-btn:hover {
+        background: #91939f;
+    }
+    .weather-input .location-btn {
+        background: #6C757D;
+    }
+    .weather-input .location-btn:hover {
+        background: #5c636a;
+    }
+    .weather-data {
+        width: 100%;
+    }
+    .weather-data .current-weather {
+        color: #fff;
+        background: #5d5f6c;
+        border-radius: 5px;
+        padding: 20px 70px 20px 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .current-weather h2 {
+        font-weight: 700;
+        font-size: 1.7rem;
+    }
+    .weather-data h6 {
+        margin-top: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    .current-weather .icon {
+        text-align: center;
+    }
+    .current-weather .icon img {
+        max-width: 120px;
+        margin-top: -15px;
+    }
+    .current-weather .icon h6 {
+    margin-top: -10px;
+    text-transform: capitalize;
+    }
+  
+    .weather-cards .card {
+    color: #fff;
+    padding: 18px 16px;
+    list-style: none;
+    width: calc(100% / 5);
+    background: #6C757D;
+    border-radius: 5px;
+    }
+    .weather-cards .card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    }
+    .weather-cards .card img {
+    max-width: 70px;
+    margin: 5px 0 -12px 0;
+    }
+
+    @media (max-width: 1400px) {
+    .weather-data .current-weather {
+        padding: 20px;
+    }
+    .weather-cards {
+        flex-wrap: wrap;
+    }
+    .weather-cards .card {
+        width: calc(100% / 4 - 15px);
+    }
+    }
+    @media (max-width: 1200px) {
+        .weather-cards .card {
+            width: calc(100% / 3 - 15px);
+        }
+    }
+    @media (max-width: 950px) {
+        .weather-input {
+            width: 450px;
+        }
+        .weather-cards .card {
+            width: calc(100% / 2 - 10px);
+        }
+    }
+    @media (max-width: 800px) {
+        h1 {
+            font-size: 1.45rem;
+            padding: 16px 0;
+        }
+        .container {
+            flex-wrap: wrap;
+            padding: 15px;
+        }
+        .weather-input {
+            width: 100%;
+        }
+        .weather-data h2 {
+            font-size: 1.35rem;
+            
+        }
+    }
+
+    @media screen and (max-width: 800px) {
+        .weather-data {
+            width: 220px; /* Kartu akan mengisi lebar layar penuh */
+            height: 260px; /* Tinggi akan menyesuaikan kontennya */
+        }
+
+        .current-weather {
+            width: 220px; /* Kartu akan mengisi lebar layar penuh */
+            height: 250px;
+           
+            
+        }
+        .container {
+            flex-wrap: wrap;
+            padding: 15px;
+        }
+
+        .weather-input button{
+            width: 220px ;
+        }
+
+        .weather-input input {
+            width: 220px;
+        }
+    }
+    @media (max-width: 768px) {
+        h3 span {
+            font-size: 18px;
+            
+        }
+    }
+
+    .typewriter h3 {
+        overflow: hidden; /* Ensures the content is not revealed until the animation */
+        border-right: .15em solid orange; /* The typewriter cursor */
+        white-space: nowrap; /* Keeps the content on a single line */
+        margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+        letter-spacing: .15em; /* Adjust as needed */
+        animation: 
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+        animation-iteration-count: infinite; /* Menjadikan animasi berulang */
+    }
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 50% }
+    }
+
+    /* The typewriter cursor effect */
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: orange; }
+    }
+    @media screen and (max-width: 600px) {
+    .column {
+            width: 100%;
+        }
+    }
+
+    .dashboard{
+        justify-content: space-around;
+    }
+
+    .img-dashboard{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {  display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
+    height: 250px;
+    grid-template-rows: 50% 50%;
+    grid-auto-rows: 1fr;
+    gap: 10px 20px;
+    grid-auto-flow: column dense;
+    justify-content: center;
+    align-content: stretch;
+    justify-items: center;
+    align-items: center;
+    background-color: #5372F0;
+    grid-template-areas:
+        "input cuaca"
+        "caricuaca cuaca";
+    }
+
+    .cuaca {
+    justify-self: center;
+    grid-area: cuaca;
+    }
+
+    .input { grid-area: input; }
+
+    .caricuaca { grid-area: caricuaca; }
+
+
+
+</style>
+
+
+<h3 class="text-small font-bold mb-2 break-words mt-3 text-blue px-3">
+    <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; "><i class='fa fa-home' title="Informasi" data-aos="fade-in"></i> Dashboard Monitoring </span>
+</h3>
+<div class="row mx-2 mb-2" style="display: flex;">
+    <div class="column mb-3" style="flex: 50%;
+    padding: 10px;
+    height: 50px;">
+        <h3 class="text-small font-bold mb-2 break-words mt-3 text-blue px-3" data-aos="fade-in">
+            Welcome Back, <%= session['sess']['nama']%>
+        </h3>
+    </div>
+    <!-- <div class="column" style="flex: 50%;
+    padding: 10px;
+    height: 50px;">
+        <select id="status_alat" onchange="pilih_alat()" class="form-select mt-2" name="status" aria-label="Default select example ">
+            <option value="off" selected>OFF - PILIH ALAT</option>
+            <% if @data_alat.present? 
+                no = 0
+            %>
+            <% @data_alat.each do |alat| %>
+                    <option value="<%= alat['id'] %>"> <%= alat['nama_alat'] %></option>
+            <% end %>
+            <%else%>
+                <option value="">Alat ON</option>
+            <% end %>
+        </select>
+    </div> -->
+</div>
+<div class="row justify-content-center mx-4">
+    <div class="col-lg-6 col-md-6 ">
+        <div class="weather-input">
+            <!-- <h3>Masukkan Nama Kota</h3> -->
+            <input class="city-input" type="text" placeholder="Contoh: Jakarta, London, New York">
+            <button class="search-btn">Cari Lokasi <i class='fa fa-search' title="Informasi"></i></button>
+            <!-- <div class="separator"></div>
+            <button class="location-btn">Gunakan Lokasi Saat Ini</button> -->
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="weather-data mt-3 ">
+            <div class="current-weather">
+                <div class="details">
+                    <h2>Data Cuaca</h2>
+                    <h6>Temperatur: _°C | Angin: _ M/S | Kelembapan: __ %</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row dashboard" >
+    <div class="card  mt-3 col-lg-4 col-md-6 mb-2 mx-4" data-aos="fade-right">
+        <div class="card-header">
+            <div style="display: flex; justify-content: flex-end;" >
+                <!-- <span  style="color: #000000; font-size: clamp(0.7rem, 2.38vw + 0.27rem, 1.3rem);">Pencahayaan Sangat Rendah</span> -->
+                <span id="pencahayaan" style="color: #000000; font-size: clamp(0.7rem, 2.38vw + 0.27rem, 1.3rem);">Status: Off</span>
+            </div>
+            <img src="/images/lux.png " width="80px" height="80px" >
+            <span>LUX</span>
+        </div>
+        <!-- masukkan id sensor lux -->
+        <!-- <span class="temp" > 354 Lx</span> -->
+        <span class="temp" id="lux-val"> Lx</span>
+        <div class="temp-scale">
+            <a style="color: #c0a95c; text-decoration: none; font-weight: 700; font-size: small;" href="/master/grafik" >See More</a>
+        </div>
+    </div>
+
+    <div class="card  mt-3 col-lg-4 col-md-6 mb-2 mx-4" data-aos="fade-right">
+        <div class="card-header">
+            <div style="display: flex; justify-content: flex-end;" >
+                <!-- <span  style="color: #000000; font-size: clamp(0.7rem, 2.38vw + 0.27rem, 1.3rem);">Kebisingan Normal</span> -->
+                <span id="kebisingan" style="color: #000000; font-size: clamp(0.7rem, 2.38vw + 0.27rem, 1.3rem);">Status: Off</span>
+
+                <!-- <span id="status_kebisingan" style="color: #ac0f31;">Status: Off</span> -->
+            </div>
+            <img src="/images/kebisingan.png " width="80px" height="80px">
+        <span>Kebisingan</span>
+        </div>
+        <div class="temp-scale">
+            <a style="color: #c0a95c; text-decoration: none; font-weight: 700; font-size: small;" href="/master/grafik" >See More</a>
+        </div>
+        <!-- masukkan id sensor kebisingan -->
+        <!-- <span class="temp"  style="text-align: center;">59 dB</span> -->
+
+        <span class="temp" id="kebisingan-val" style="text-align: 1center;">dB</span>
+    
+        <div class="temp-scale">
+            <a style="color: #c0a95c; text-decoration: none; font-weight: 700; font-size: small;" href="/master/grafik" >See More</a>
+        </div>
+        
+    </div>
+
+    <div class="card  mt-3 col-lg-4 col-md-6 mb-2 mx-4" data-aos="fade-right">
+        <div class="card-header">
+            <div style="display: flex; justify-content: flex-end;">
+                <span id="pms" style="color: #000000; font-size: clamp(0.7rem, 2.38vw + 0.27rem, 1.3rem);">Status: Off</span>
+
+                <!-- <span style="color: #303131;">Status: Off</span> -->
+            </div>
+            <img src="/images/dust.png " width="80px" height="80px" >
+            <span>Debu</span>
+        </div>
+        <span class="temp" id="debu-val">ug/m3</span>
+        <!-- masukkan id sensor suhu debu-->
+        <div class="temp-scale">
+            <a style="color: #c0a95c; text-decoration: none; font-weight: 700; font-size: small;" href="/master/grafik" >See More</a>
+        </div>
+    </div>
+    <div class="card  mt-3 col-lg-4 col-md-6 mb-2 mx-4" data-aos="fade-right">
+        <div class="card-header">
+            <div style="display: flex; justify-content: flex-end;">
+                <span id="Co2_udara" style="color:#000000; font-size: clamp(0.7rem, 2.38vw + 0.27rem, 1.3rem);">Status: Off</span>
+                <!-- <span id="status_co2" style="color:#ac0f31;">Status: Off</span> -->
+            </div>
+            <img src="/images/co2.png " width="80px" height="80px" style="justify-content: center;">
+        
+            <span>Gas CO2</span>
+        
+        </div>
+        <!-- masukkan id sensor amonia -->
+        <!-- <span class="temp" > 412 CO2</span> -->
+        <span class="temp" id="amonia-val"> PPM</span>
+        <!-- <span class="temp" >428 CO2</span> -->
+
+        <div class="temp-scale">
+            <a style="color: #c0a95c; text-decoration: none; font-weight: 700; font-size: small;" href="/master/grafik" >See More</a>
+        </div>
+    </div>
+</div>
+           
+<script>
+        // Mendapatkan objek tanggal dan waktu saat ini
+    const currentTime = new Date();
+    // Mengatur zona waktu ke WIB (UTC+7)
+    const options = { timeZone: 'Asia/Jakarta' };
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+
+    // Mengambil tanggal dan waktu dalam zona waktu WIB
+    const formattedDate = formatter.format(currentTime);
+
+    // Menampilkan tanggal dan waktu dalam elemen dengan id "tanggal"
+    document.getElementById('tanggal').textContent = formattedDate;
+    document.getElementById('tanggal2').textContent = formattedDate;
+
+    function updateClock() {
+        const currentTime = new Date();
+        const options = { timeZone: 'Asia/Jakarta', hour12: false };
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+
+        const formattedTime = formatter.format(currentTime);
+        document.getElementById('jam').textContent = formattedTime;
+    }
+
+    // Panggil updateClock setiap detik
+    setInterval(updateClock, 1000);
+    // Inisialisasi jam saat halaman pertama kali dimuat
+    updateClock();
+
+    function setProgress() {
+        var input = document.getElementById("progressInput").value;
+        var parsedInput = parseFloat(input);
+        
+        if (isNaN(parsedInput) || parsedInput < 0 || parsedInput > 100) {
+            alert("Masukkan persentase antara 0 dan 100");
+            return;
+        }
+        
+        var elem = document.getElementById("myBar");
+        elem.style.width = parsedInput + '%';
+        elem.innerHTML = parsedInput + '%';
+    }
+
+  
+</script>
+<!-- Script Wajib -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    AOS.init();
+</script>
+
+<script>
+    window.onload = function () {
+        if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
+            // Tambahkan logika untuk mengarahkan pengguna kembali ke halaman dashboard jika diperlukan
+            if (window.location.pathname !== "/master/dashboard") {
+            window.location.replace("/master/dashboard");
+            }
+        };
+        }
+    };
+
+    const cityInput = document.querySelector(".city-input");
+    const searchButton = document.querySelector(".search-btn");
+    const locationButton = document.querySelector(".location-btn");
+    const currentWeatherDiv = document.querySelector(".current-weather");
+
+    const API_KEY = "<%= @api_key %>"; 
+    // console.log(API_KEY);
+    const createWeatherCard = (cityName, weatherData) => {
+        const { name, weather, main, wind } = weatherData;
+        const iconUrl = `https://openweathermap.org/img/w/${weather[0].icon}.png`;
+        const weatherDescription = weather[0].description;
+
+        const html = `
+        <div >
+            <h2 style="font-size:22px;">${name} (${new Date().toLocaleDateString()}) <img src="${iconUrl}" alt="Weather Icon" >${weatherDescription}</h2>
+
+            <h6>Temperature: ${main.temp}°C | Angin: ${wind.speed} M/S | Kelembapan: ${main.humidity}%</h6>
+        </div>
+        `;
+
+        currentWeatherDiv.innerHTML = html;
+    };
+
+    const getWeatherByCity = () => {
+        const cityName = cityInput.value.trim();
+        if (!cityName) return;
+
+        const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric&lang=id`;
+
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => createWeatherCard(cityName, data))
+            .catch(error => {
+                
+                console.error("Error fetching weather data:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Periksa nama kota yang anda masukkan.',
+                    text: 'Silakan coba lagi nanti.',
+                });
+            });
+    };
+
+        // const getWeatherByLocation = () => {
+        //     navigator.geolocation.getCurrentPosition(
+        //         position => {
+        //             const { latitude, longitude } = position.coords;
+        //             const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`;
+
+        //             fetch(API_URL)
+        //                 .then(response => response.json())
+        //                 .then(data => createWeatherCard(data.name, data))
+        //                 .catch(error => {
+        //                     console.error("Error fetching weather data:", error);
+        //                     alert("Terjadi kesalahan saat mengambil data cuaca.");
+        //                 });
+        //         },
+        //         error => {
+        //             console.error("Error getting geolocation:", error);
+        //             alert("Terjadi kesalahan saat mengambil lokasi saat ini.");
+        //         }
+        //     );
+        // };
+
+        window.addEventListener("load", () => {
+            const defaultCity = "Jakarta"; // Ganti dengan kota default yang Anda inginkan
+            cityInput.value = defaultCity; // Isi input dengan nilai kota default
+            getWeatherByCity(); // Panggil fungsi getWeatherByCity secara otomatis
+        });
+
+    searchButton.addEventListener("click", getWeatherByCity);
+    locationButton.addEventListener("click", getWeatherByLocation);
+</script>
+
+<script>
+    
+    function getDataFromMQTT() {
+        $.ajax({
+            url: '/mqtt/sub',
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                // if (res && res.hasOwnProperty('tingkat_kebisingan') && res.hasOwnProperty('lux') && res?.hasOwnProperty('Co2')) {
+
+                if (res && res.hasOwnProperty('suara') && res.hasOwnProperty('lux')) {
+                    const kebisingan = res.suara;
+                    const lux = res.lux;
+                    const amonia = res.Co2;
+                    const debu = res.debu;
+                    const pencahayaan = res.pencahayaan;
+                    const kebisingan2 = res.kebisingan;
+                    const pms = res.pms;
+                    const Co2_udara = res.Co2_udara;
+
+                    console.log('Kebisingan Value:', lux);
+
+                    // Perbarui tampilan hanya jika data diterima
+                    $("#pencahayaan").text(`Pencahayaan ${pencahayaan}`);
+                    $("#kebisingan").text(`Kebisingan ${kebisingan2}`);
+                    $("#Co2_udara").text(`Tingkat Co2 ${Co2_udara}`);
+                    $("#pms").text(`Partikel Diudara ${pms}`);
+                    $("#kebisingan-val").text(`${kebisingan} dB`);
+                    $("#debu-val").text(`${debu} ug/m3`);
+                    $("#lux-val").text(`${lux} Lx`);
+                    $("#amonia-val").text(`${amonia} PPM`);
+                    $("#status, #status_kelembaban, #status_kebisingan, #status_lux, #status_co2 ").text("Status: On").css("color", "#303131");
+                } else {
+                    // Data tidak diterima, ubah status menjadi Off
+                    // $("#status, #status_kelembaban, #status_kebisingan, #status_lux, #status_co2 ").text("Status: Off").css("color", "red");
+                }
+            },
+            error: function (xhr, status, error) {
+                // Penanganan kesalahan
+                console.error(error);
+
+                // Ubah status menjadi Off ketika terjadi kesalahan
+                $("#status, #status_kelembaban, #status_kebisingan, #status_lux, #status_co2 ").text("Status: Connected!").css("color", "red");
+            }
+        });
+    }
+    // Panggil getDataFromMQTT secara berkala (setiap 5 detik)
+    setInterval(getDataFromMQTT, 1000);
+</script>

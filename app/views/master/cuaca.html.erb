@@ -1,0 +1,493 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+    
+    .cardlist {
+        /* Misalnya, mengatur lebar ke 80% */
+        margin: 0 auto; /* Untuk membuat kontainer berada di tengah halaman */
+        padding: 20px; /* Contoh padding */
+        /* Contoh warna latar belakang */
+       /* Contoh border */
+        display: flex;
+        
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 45px;
+        background: linear-gradient(145deg, #767778, #464750);
+        box-shadow:  5px 5px 10px #939191,
+                    -5px -5px 10px #dfdfe2;
+        
+    }
+        /* Tambahkan transisi pada elemen yang akan memiliki efek fading */
+    .nav .collapse {
+        transition: height 0.3s ease-in-out;
+    }
+    #body {
+        background-color: rgb(31, 53, 72);
+    }
+
+    /* Atur tinggi elemen menjadi nol saat tersembunyi */
+    .nav .collapse:not(.show) {
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* Atur tinggi elemen saat ditampilkan */
+    .nav .collapse.show {
+        height: auto;
+    }
+
+
+    /* cuaca */
+
+    .container {
+    display: flex;
+    gap: 35px;
+    padding: 30px;
+    }
+    .weather-input {
+    width: 550px;
+    }
+    .weather-input input {
+    height: 46px;
+    width: 70%;
+    outline: none;
+    font-size: 1.07rem;
+    padding: 0 17px;
+    margin: 10px 0 20px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    }
+    .weather-input input:focus {
+    padding: 0 16px;
+    border: 2px solid #5372F0;
+    }
+    .weather-input .separator {
+    height: 1px;
+    width: 100%;
+    margin: 25px 0;
+    background: #BBBBBB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .weather-input .separator::before{
+    content: "or";
+    color: #6C757D;
+    font-size: 1.18rem;
+    padding: 0 15px;
+    margin-top: -4px;
+    background: #E3F2FD;
+    }
+    .weather-input button {
+    width: 70%;
+    padding: 10px 0;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #fff;
+    background: #5372F0;
+    transition: 0.2s ease;
+    }
+    .weather-input .search-btn:hover {
+    background: #2c52ed;
+    }
+    .weather-input .location-btn {
+    background: #6C757D;
+    }
+    .weather-input .location-btn:hover {
+    background: #5c636a;
+    }
+    .weather-data {
+    width: 100%;
+    }
+    .weather-data .current-weather {
+    color: #fff;
+    background: #5372F0;
+    border-radius: 5px;
+    padding: 20px 70px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    }
+    .current-weather h2 {
+    font-weight: 700;
+    font-size: 1.7rem;
+    }
+    .weather-data h6 {
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    }
+    .current-weather .icon {
+    text-align: center;
+    }
+    .current-weather .icon img {
+    max-width: 120px;
+    margin-top: -15px;
+    }
+    .current-weather .icon h6 {
+    margin-top: -10px;
+    text-transform: capitalize;
+    }
+    .days-forecast h2 {
+    margin: 20px 0;
+    font-size: 1.5rem;
+    }
+    .days-forecast .weather-cards {
+    display: flex;
+    gap: 20px;
+    }
+    .weather-cards .card {
+    color: #fff;
+    padding: 18px 16px;
+    list-style: none;
+    width: calc(100% / 5);
+    background: #6C757D;
+    border-radius: 5px;
+    }
+    .weather-cards .card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    }
+    .weather-cards .card img {
+    max-width: 70px;
+    margin: 5px 0 -12px 0;
+    }
+
+    @media (max-width: 1400px) {
+    .weather-data .current-weather {
+        padding: 20px;
+    }
+    .weather-cards {
+        flex-wrap: wrap;
+    }
+    .weather-cards .card {
+        width: calc(100% / 4 - 15px);
+    }
+    }
+    @media (max-width: 1200px) {
+    .weather-cards .card {
+        width: calc(100% / 3 - 15px);
+    }
+    }
+    @media (max-width: 950px) {
+    .weather-input {
+        width: 450px;
+    }
+    .weather-cards .card {
+        width: calc(100% / 2 - 10px);
+    }
+    }
+    @media (max-width: 750px) {
+    h1 {
+        font-size: 1.45rem;
+        padding: 16px 0;
+    }
+    .container {
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+    .weather-input {
+        width: 100%;
+    }
+    .weather-data h2 {
+        font-size: 1.35rem;
+    }
+    }
+
+    /* progress bar */
+    .progress {
+        background-color: #d8d8d8;
+        border-radius: 20px;
+        position: relative;
+        margin: 15px 0;
+        height: 30px;
+        width: 300px;
+    }
+
+    .progress-done {
+        background: linear-gradient(to left, #F2709C, #FF9472);
+        box-shadow: 0 3px 3px -5px #F2709C, 0 2px 5px #F2709C;
+        border-radius: 20px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 0;
+        opacity: 0;
+        transition: 1s ease 0.3s;
+    }
+
+
+    @media (max-width: 768px) {
+        /* Ini akan berlaku saat lebar layar kurang dari atau sama dengan 768px (mode mobile) */
+        
+        /* Menyembunyikan teks "Dashboard" asli */
+        .navbar .nav-link .d-none.d-sm-inline {
+            display: none;
+        }
+
+        /* Mengatur ukuran ikon "fa fa-dashboard" dan teks baru yang ingin ditampilkan */
+        .navbar .nav-link i.fa.fa-dashboard {
+            font-size: 10px; /* Ubah ukuran ikon sesuai keinginan Anda */
+            margin-right: 5px; /* Beri sedikit margin agar ada jarak antara ikon dan teks */
+        }
+        .navbar .nav-link .mobile-text {
+            font-size: 14px; /* Ubah ukuran teks sesuai keinginan Anda */
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 250px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+     
+    @media screen and (max-width: 768px) {
+        .card img {
+            width: 200px; /* Kartu akan mengisi lebar layar penuh */
+            height: auto; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    
+
+</style>
+
+
+<div class="container-fluid" style="background-color: #ebedf0;">
+
+    
+    <div class="row flex-nowrap " >
+        <div class="col-auto col-md-3 col-xl-2 px-sm-3 px-0 bg-dark" style="border-radius: 0px 20px 20px 0px;">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none" >
+                
+                    <span class="fs-5 d-none d-sm-inline mt-2">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="/master/dashboard" class="nav-link px-0 align-middle">
+                            <i class="fa fa-home" title="Our Team"></i> <span class="ms-1 d-none d-sm-inline ">dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="/master/index" class="nav-link px-0 align-middle">
+                            <i class="fa fa-user" title="Our Team"></i> <span class="ms-1 d-none d-sm-inline ">Our Team</span></a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa fa-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Home</span>
+                            </div>
+                        </a>
+                    </li>
+                     -->
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle dropdown-toggle"">
+                            <i class="fa fa-dashboard" title="Monitoring Sensor"></i> <span class=" ms-1 d-none d-sm-inline mobile-text">Monitoring Sensor</span> </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/master/dht" class="nav-link align-middle px-0 text-white">
+                                    <i class="fa fa-thermometer" title="DHT22"></i> <span class="ms-1 d-none d-sm-inline">DHT 22</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master/kebisingan" class="nav-link align-middle px-0 text-white">
+                                    <i class='bx bx-user-voice'title="Kebisingan"></i> <span class="ms-1 d-none d-sm-inline">Kebisingan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master//lux" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun' title="LUX"></i> <span class="ms-1 d-none d-sm-inline">LUX</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master/amonia" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun 'title="Amonia"></i> <span class="ms-1 d-none d-sm-inline">Amonia</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master/debu" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun' title="Debu"></i> <span class="ms-1 d-none d-sm-inline">Debu</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/master/info" class="nav-link px-0 align-middle">
+                            <i class='fa fa-info-circle' title="Informasi"></i></i> <span class="ms-1 d-none d-sm-inline ">Informasi</span></a>
+                    </li>
+                
+                    
+                </ul>
+                <hr>
+                <div class="dropdown pb-4 ">
+                    <a href="#" class="d-flex px-0 align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/images/ipb.png" alt="user" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-4" title="User">User</span>
+                        
+                    </a>
+
+                    
+                
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="/master/setting">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        <li><a class="dropdown-item" href="/"> <i class="fa fa-sign-in"></i> Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col py-2">
+                <div class="cardlist mb-0">
+                    <div class="card-content" style="display: flex; flex-direction: row; align-items: center; justify-content: center; text-align: center;">
+                       
+                        <img src="/images/svipb.png" style="width: 200px; height: auto;">
+                    
+                    </div>
+                </div>
+                
+
+                <h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-3">
+                    <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; ">Cuaca</span>
+                </h3>
+
+                <!-- <div class="progress-container">
+                    <input type="number" id="progressInput" placeholder="Masukkan persentase">
+                    <button onclick="setProgress()">Set Progress</button>
+                    <div id="myProgress">
+                      <div id="myBar">0%</div>
+                    </div>
+                </div> -->
+                <div class="container">
+                    <div class="row ">
+                        <div class="col mb-2 mx-2">
+                            <div class="weather-input">
+                                <!-- <h3>Masukkan Nama Kota</h3> -->
+                                <input class="city-input" type="text" placeholder="Contoh: Jakarta, London, New York">
+                                <button class="search-btn">Cari</button>
+                                <!-- <div class="separator"></div>
+                                <button class="location-btn">Gunakan Lokasi Saat Ini</button> -->
+                            </div>
+                        </div>
+                        <div class="col mx-3">
+                            <div class="weather-data mt-3 ">
+                                <div class="current-weather">
+                                    <div class="details">
+                                        <h2>_____ (______)</h2>
+                                        <h6>Temperatur: __°C</h6>
+                                        <h6>Angin: __ M/S</h6>
+                                        <h6>Kelembaban: __%</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- <div class="progress">
+                    <div class="progress-done" id="suhu" suhu="50">
+                        50%
+                    </div>
+                </div> -->
+                
+                  
+                  
+
+                <!-- Masukkan webnya -->
+
+                
+                <div class="mx-auto" style="width: 200px; ">
+                    @IoT Intern MTM
+                </div>
+            </div>
+
+        
+        </div>
+    </div>
+</div>
+
+<script>
+   const cityInput = document.querySelector(".city-input");
+        const searchButton = document.querySelector(".search-btn");
+        const locationButton = document.querySelector(".location-btn");
+        const currentWeatherDiv = document.querySelector(".current-weather");
+
+        const API_KEY = "9f2e1f455e003246d00a9c41b725bbc8"; // Ganti dengan API key Anda
+
+        const createWeatherCard = (cityName, weatherData) => {
+            const { name, weather, main, wind } = weatherData;
+            const iconUrl = `https://openweathermap.org/img/w/${weather[0].icon}.png`;
+
+            const html = `
+                <h2>${name} (${new Date().toLocaleDateString()})</h2>
+                <img src="${iconUrl}" alt="Weather Icon">
+                <h6>Temperatur: ${main.temp}°C</h6>
+                <h6>Angin: ${wind.speed} M/S</h6>
+                <h6>Kelembaban: ${main.humidity}%</h6>
+            `;
+
+            currentWeatherDiv.innerHTML = html;
+        };
+
+        const getWeatherByCity = () => {
+            const cityName = cityInput.value.trim();
+            if (!cityName) return;
+
+            const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
+
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => createWeatherCard(cityName, data))
+                .catch(error => {
+                    console.error("Error fetching weather data:", error);
+                    alert("Terjadi kesalahan saat mengambil data cuaca.");
+                });
+        };
+
+        const getWeatherByLocation = () => {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+                    const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`;
+
+                    fetch(API_URL)
+                        .then(response => response.json())
+                        .then(data => createWeatherCard(data.name, data))
+                        .catch(error => {
+                            console.error("Error fetching weather data:", error);
+                            alert("Terjadi kesalahan saat mengambil data cuaca.");
+                        });
+                },
+                error => {
+                    console.error("Error getting geolocation:", error);
+                    alert("Terjadi kesalahan saat mengambil lokasi saat ini.");
+                }
+            );
+        };
+
+    searchButton.addEventListener("click", getWeatherByCity);
+    locationButton.addEventListener("click", getWeatherByLocation);
+
+    // progress bar
+   
+    const progress = 
+    document.querySelector('.progress-done');
+
+    progress.style.width = progress.getAttribute('suhu') + '%';
+    progress.style.opacity = 1;
+</script>

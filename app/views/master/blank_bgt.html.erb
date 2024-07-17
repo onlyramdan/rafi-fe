@@ -1,0 +1,199 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+    
+    .cardlist {
+        /* Misalnya, mengatur lebar ke 80% */
+        margin: 0 auto; /* Untuk membuat kontainer berada di tengah halaman */
+        padding: 20px; /* Contoh padding */
+        /* Contoh warna latar belakang */
+       /* Contoh border */
+        display: flex;
+        
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 45px;
+        background: linear-gradient(145deg, #767778, #464750);
+        box-shadow:  5px 5px 10px #939191,
+                    -5px -5px 10px #dfdfe2;
+        
+    }
+        /* Tambahkan transisi pada elemen yang akan memiliki efek fading */
+    .nav .collapse {
+        transition: height 0.3s ease-in-out;
+    }
+    #body {
+        background-color: rgb(31, 53, 72);
+    }
+
+    /* Atur tinggi elemen menjadi nol saat tersembunyi */
+    .nav .collapse:not(.show) {
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* Atur tinggi elemen saat ditampilkan */
+    .nav .collapse.show {
+        height: auto;
+    }
+
+        /* Tambahkan efek hover pada tautan dropdown */
+    .nav .collapse.show a.nav-link:hover {
+        background-color: #12408a; /* Ganti dengan warna latar yang Anda inginkan */
+    }
+
+
+    @media (max-width: 768px) {
+        /* Ini akan berlaku saat lebar layar kurang dari atau sama dengan 768px (mode mobile) */
+        
+        /* Menyembunyikan teks "Dashboard" asli */
+        .navbar .nav-link .d-none.d-sm-inline {
+            display: none;
+        }
+
+        /* Mengatur ukuran ikon "fa fa-dashboard" dan teks baru yang ingin ditampilkan */
+        .navbar .nav-link i.fa.fa-dashboard {
+            font-size: 10px; /* Ubah ukuran ikon sesuai keinginan Anda */
+            margin-right: 5px; /* Beri sedikit margin agar ada jarak antara ikon dan teks */
+        }
+        .navbar .nav-link .mobile-text {
+            font-size: 14px; /* Ubah ukuran teks sesuai keinginan Anda */
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 250px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+     
+    @media screen and (max-width: 768px) {
+        .card img {
+            width: 200px; /* Kartu akan mengisi lebar layar penuh */
+            height: auto; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+    /* gauge */
+   
+
+</style>
+
+
+<div class="container-fluid" style="background-color: #ebedf0;">
+
+    
+    <div class="row flex-nowrap " >
+        <div class="col-auto col-md-3 col-xl-2 px-sm-3 px-0 bg-dark" style="border-radius: 0px 20px 20px 0px;">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none" >
+                
+                    <span class="fs-5 d-none d-sm-inline mt-2">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="/master/dashboard" class="nav-link px-0 align-middle">
+                            <i class="fa fa-home" title="Our Team"></i> <span class="ms-1 d-none d-sm-inline ">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="/master/index" class="nav-link px-0 align-middle">
+                            <i class="fa fa-user" title="Our Team"></i> <span class="ms-1 d-none d-sm-inline ">Our Team</span></a>
+                    </li>
+                   
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle dropdown-toggle"">
+                            <i class="fa fa-dashboard" title="Monitoring Sensor"></i> <span class=" ms-1 d-none d-sm-inline mobile-text">Monitoring Sensor</span> </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/master/dht" class="nav-link align-middle px-0 text-white">
+                                    <i class="fa fa-thermometer" title="DHT22"></i> <span class="ms-1 d-none d-sm-inline">DHT 22</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master/kebisingan" class="nav-link align-middle px-0 text-white">
+                                    <i class='bx bx-user-voice'title="Kebisingan"></i> <span class="ms-1 d-none d-sm-inline">Kebisingan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master//lux" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun' title="LUX"></i> <span class="ms-1 d-none d-sm-inline">LUX</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master/amonia" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun 'title="Amonia"></i> <span class="ms-1 d-none d-sm-inline">Amonia</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/master/debu" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun' title="Debu"></i> <span class="ms-1 d-none d-sm-inline">Debu</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/master/info" class="nav-link px-0 align-middle">
+                            <i class='fa fa-info-circle' title="Informasi"></i></i> <span class="ms-1 d-none d-sm-inline ">Informasi</span></a>
+                    </li> 
+                </ul>
+                <hr>
+                <div class="dropdown pb-4 ">
+                    <a href="#" class="d-flex px-0 align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/images/ipb.png" alt="user" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-4" title="User">User</span>
+                        
+                    </a>
+
+                    
+                
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="/master/setting">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        <li><a class="dropdown-item" href="/"> <i class="fa fa-sign-in"></i> Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col py-2">
+                <div class="cardlist mb-0">
+                    <div class="card-content" style="display: flex; flex-direction: row; align-items: center; justify-content: center; text-align: center;">
+                       
+                        <img src="/images/svipb.png" style="width: 200px; height: auto;">
+                    
+                    </div>
+                </div>
+                
+
+                <h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-3">
+                    <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; ">Sensor Lux</span>
+                </h3>
+
+
+                <!-- Masukkan webnya -->
+              
+   
+                <div class="mx-auto" style="width: 200px; ">
+                    @IoT Intern MTM
+                </div>
+            </div>
+            
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

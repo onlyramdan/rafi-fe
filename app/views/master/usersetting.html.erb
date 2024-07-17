@@ -1,0 +1,288 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css">
+
+<style>
+   
+
+  .badge {
+      border-radius: 0;
+      font-size: 12px;
+      line-height: 1;
+      padding: .375rem .5625rem;
+      font-weight: normal;
+  }
+</style>
+<div class="card text-center mt-4">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <p class="nav-link active" id="datauser-tab" data-toggle="tab" href="#datauser" role="tab" aria-controls="datauser" aria-selected="true" onclick="bataluser()">User</p>
+        </li>
+        <li class="nav-item">
+          <p class="nav-link" id="formuser-tab" data-toggle="tab" href="#formuser" role="tab" aria-controls="formuser" aria-selected="false" onclick="tabformuser()">Form</p>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content mt-3">
+        <div class="tab-pane active" id="datauser" role="tabpanel" aria-labelledby="datauser-tab">
+          <div class="row">
+            <div class="col text-start">
+              <%# Table %>
+              <% if flash[:notice].present? %>
+                <div class="alert alert-success">
+                  <%= flash[:notice] %>
+                </div>
+              <% elsif flash[:alert].present? %>
+                <div class="alert alert-danger">
+                  <%= flash[:alert] %>
+                </div>
+              <% end %>
+              <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Cari akun.." value="<%= @keyword %>">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+              <div class="table-responsive-sm">
+                <table class="table table-hover table-striped mx-0">
+                  <thead style="background-color: #215B88; color: #fff;" >
+                    <tr style="text-align: center;">
+                      <td>No.</td>
+                      <!-- <td>id</td> -->
+                      <td>Nama</td>
+                      <td>Email</td>
+                      <td>Role</td>
+                      <td>status</td>
+                      <td>Aksi</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% if @data_user.present? %>
+                    <% @no = 0
+                    if params['page'] == nil || params['page'] == 1 || @keyword.present?
+                                @no = 0
+                    else
+                        @no = (@limit * @page) - @limit
+                    end%>
+                    <% no = @start_page || 1 %>
+                    <% @data_user.each_with_index do |user, index| %>
+                    <tr style="text-align: center;">
+                      <td><%= no+= 1 %></td>
+                      <!-- <td><%= user['id'] %></td> -->
+                      <td><%= user['nama'] %></td>
+                      <td><%= user['email']%></td>
+                      <td><%= user['role']%></td>
+                      <td align="center">
+                        <i class="<%= user['status'].to_i == 1 ? 'fa fa-check text-success' : 'fa fa-close text-danger' %>"
+                            data-toggle="tooltip" data-placement="top" title="<%= user['status'].to_i == 1 ? 'Aktif' : 'Tidak Aktif' %>">
+                        </i>
+                      </td>
+                    
+                        <!-- <% if user['status']=="1"%>
+                        <td>Aktif</td>
+                        <% else %>
+                        <td> Tidak Aktif</td>
+                        <% end %> -->
+                      <td class="text-center">
+                          <button class="btnedit btn btn-sm btn-primary" id="aksi_id" onclick="edituser('<%=user.to_json%>')" title="Edit">
+                              <i class="fa fa-edit"></i>
+                          </button>
+                         
+                          <button class="btn btn-danger btn-sm" onclick="konfirmasiHapus('<%= user['id'].to_json %>')" title="Hapus" data-confirm="Apakah Anda yakin ingin menghapus akun ini?">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                         
+                      </td>
+                    </tr>
+                  <% end %>
+                  <% else %>
+                    <tr>
+                      <td class="text-center" colspan="8">Data User Tidak Ada</td>
+                    </tr>
+                  </tbody>
+                  <% end %>
+                </table>
+              </div>
+              <div>
+                <% if @meta.present? %>
+                                    <ul class="pagination">
+                                        <% if @meta['prev_page'].to_i > 0 %>
+                                        <li class="page-item"><a class="page-link" href="?page=<%= @meta['prev_page'].to_i %>&keyword=<%= @key %>">Previous</a></li>
+                                        <% end %>
+
+                                        <% if @meta['total_pages'].to_i > 1 %>
+                                        <%
+                                          i = 1
+                                          while i <= @meta['total_pages'].to_i do
+                                            if (@meta['current_page'].to_i == i.to_i)
+                                                var = 'active'
+                                            else
+                                                var = ''
+                                            end
+                                        %>
+                                            <li class="page-item <%= var %>"><a class="page-link" href="?page=<%= i.to_i %>&keyword=<%= @key %>"><%= i %></a></li>
+                                        <%
+                                            i += 1
+                                          end
+                                        %>
+                                        <% end %>
+
+                                        <% if @meta['next_page'].to_i > 0 %>
+                                        <li class="page-item"><a class="page-link" href="?page=<%= @meta['next_page'].to_i %>&keyword=<%= @key %>">Next</a></li>
+                                        <% end %>
+                                    </ul>
+                                <% else %>
+
+                                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="formuser" role="tabpanel" aria-labelledby="formuser-tab">
+          <div class="row">
+            <div class="col text-start">
+              <form id="form-user" action="/user_simpan" method="post">
+                <div class="mb-3">
+                  <label for="nama_alat" class="form-label ">Nama</label>
+                  <input type="text" id="id_user" class="form-control" name="id_user" hidden>
+                  <input type="text" id="nama" class="form-control" name="nama">
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label ">Email</label>
+                  <input type="text" id="email" class="form-control" name="email">
+                </div>
+                <div class="mb-3">
+                  <label for="role" class="form-label ">Role</label>
+                  <select id="role" class="form-select" name="role" aria-label="Default select example">
+                    <option value="">--Pilih--</option>
+                    <option value="user" checked>User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="status_user" class="form-label ">Status</label>
+                  <select id="status_user" class="form-select" name="status_user" aria-label="Default select example">
+                    <option value="">--Pilih--</option>
+                    <option value="1" checked>Aktif</option>
+                    <option value="0">Tidak Aktif</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary" id="aksi_simpan" title="Simpan">Simpan</button>
+              </form>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Menambahkan konfirmasi penghapusan pada semua tombol dengan class "btn-danger"
+    $(".btn-danger").click(function (e) {
+      e.preventDefault(); // Mencegah tindakan asli tombol hapus
+
+      var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+      if (confirmation) {
+        // Lanjutkan penghapusan jika pengguna mengonfirmasi
+        hapususer(id_user);
+        // window.location.href = $(this).attr("href");
+      } else {
+        window.location.href ="master/dashboard"
+        // Pengguna memilih untuk tidak menghapus, tidak ada tindakan lanjutan
+      }
+    });
+  });
+
+</script>
+
+<script>
+    function bataluser() {
+        $('#id_user').val('')
+        $('#nama').val('')
+        $('#email').val('')
+        $('#role').val('')
+        $('#status_user').val('')
+        $('#datauser-tab').tab('show');
+    }
+
+    function edituser(data) {
+        parse = JSON.parse(data);
+        $('#id_user').val(parse.id)
+        $('#nama').val(parse.nama)
+        $('#email').val(parse.email)
+        $('#role').val(parse.role)
+        $('#status_user').val(parse.status)
+
+        $('#formuser-tab').tab('show'); 
+    }
+
+    function konfirmasiHapus(id_user) {
+      var id = JSON.parse(id_user);
+      var konfirmasi = confirm("Apakah Anda yakin ingin menghapus akun ini?");
+
+      if (konfirmasi) {
+          hapusUser(id);
+      } else {
+      // Jika pengguna memilih untuk membatalkan, tetap di halaman saat ini (/user)
+      window.location.href = '/user';
+      }
+    }
+
+    function hapusUser(id) {
+        $.ajax({
+            url: '/aksi_hapususer',
+            dataType: 'JSON',
+            type: 'POST',
+            data: {
+                "id": id,
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.status == true) {
+                 
+
+                    window.location.href = '/user';
+                }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+    }
+
+    // function hapususer(id_user) {
+    //     var id = JSON.parse(id_user);
+    //     $.ajax({
+    //     url: '/aksi_hapususer',
+    //     dataType: 'JSON',
+    //     type: 'POST',
+    //     data: {
+    //         "id": id,
+    //     },
+    //     success: function (res){
+    //         console.log(res);
+    //         if(res.status == true){
+    //         window.location.href = '/user';
+    //     }},
+    //     error: function (res) {
+    //         console.log(res);
+    //     } 
+    //     })
+    // }
+
+    function tabformuser() {
+        $('#formuser-tab').tab('show');
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+

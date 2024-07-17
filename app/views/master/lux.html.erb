@@ -1,0 +1,358 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+    
+    .cardlist {
+        /* Misalnya, mengatur lebar ke 80% */
+        margin: 0 auto; /* Untuk membuat kontainer berada di tengah halaman */
+        padding: 20px; /* Contoh padding */
+        /* Contoh warna latar belakang */
+       /* Contoh border */
+        display: flex;
+        
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 45px;
+        background: linear-gradient(145deg, #767778, #464750);
+        box-shadow:  5px 5px 10px #939191,
+                    -5px -5px 10px #dfdfe2;
+        
+    }
+        /* Tambahkan transisi pada elemen yang akan memiliki efek fading */
+    .nav .collapse {
+        transition: height 0.3s ease-in-out;
+    }
+    #body {
+        background-color: rgb(31, 53, 72);
+    }
+
+    /* Atur tinggi elemen menjadi nol saat tersembunyi */
+    .nav .collapse:not(.show) {
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* Atur tinggi elemen saat ditampilkan */
+    .nav .collapse.show {
+        height: auto;
+    }
+
+        /* Tambahkan efek hover pada tautan dropdown */
+    .nav .collapse.show a.nav-link:hover {
+        background-color: #12408a; /* Ganti dengan warna latar yang Anda inginkan */
+    }
+
+    
+    :root {
+        --rotate: 0deg;
+        --gradient-score: 15%;
+        --translate-rotate:-45deg;
+        --rotate-angle: 45deg;
+        --translate-x: -45px;
+        --translate-y:45px;
+        /* background-color: #939191; */
+        
+    }
+
+    #scoreCard .card-body {
+        height: 250px;
+        
+        background-color: #b5b6c0;
+    }
+
+    .score-meter {
+        height: 500px;
+        width: 90%;
+    }
+
+    .inner-score {
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(var(--rotate-angle), rgb(17, 112, 195) 50%, #10192555 50%);
+    }
+
+    .white-circle {
+        width: 90%;
+        height: 90%;
+    }
+
+    .rotation {
+        width: 100%;
+        height: 250px;
+        transform: translate(var(--translate-x), var(--translate-y)) rotate(var(--translate-rotate));
+    }
+
+    .needle-circle {
+        width: 25px;
+        height: 25px;
+        background-color: #e8eef6;
+        bottom: 10%;
+    }
+
+    .needle {
+        height: 200px;
+        bottom: 25px;
+        width: 8px;
+        background-color: #aea439;
+    }
+
+
+    @media (max-width: 768px) {
+        /* Ini akan berlaku saat lebar layar kurang dari atau sama dengan 768px (mode mobile) */
+        
+        /* Menyembunyikan teks "Dashboard" asli */
+        .navbar .nav-link .d-none.d-sm-inline {
+            display: none;
+        }
+
+        /* Mengatur ukuran ikon "fa fa-dashboard" dan teks baru yang ingin ditampilkan */
+        .navbar .nav-link i.fa.fa-dashboard {
+            font-size: 10px; /* Ubah ukuran ikon sesuai keinginan Anda */
+            margin-right: 5px; /* Beri sedikit margin agar ada jarak antara ikon dan teks */
+        }
+        .navbar .nav-link .mobile-text {
+            font-size: 14px; /* Ubah ukuran teks sesuai keinginan Anda */
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .card {
+            width: 250px; /* Kartu akan mengisi lebar layar penuh */
+            height: 300px; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+     
+    @media screen and (max-width: 768px) {
+        .card img {
+            width: 200px; /* Kartu akan mengisi lebar layar penuh */
+            height: auto; /* Tinggi akan menyesuaikan kontennya */
+        }
+    }
+
+</style>
+
+
+<div class="container-fluid" style="background-color: #ebedf0;">
+
+    
+    <div class="row flex-nowrap " >
+        <div class="col-auto col-md-3 col-xl-2 px-sm-3 px-0 bg-dark" style="border-radius: 0px 20px 20px 0px;">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none" >
+                
+                    <span class="fs-5 d-none d-sm-inline mt-2">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="/master/index" class="nav-link px-0 align-middle">
+                            <i class="fa fa-user" title="Our Team"></i> <span class="ms-1 d-none d-sm-inline ">Our Team</span></a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa fa-user"></i>
+                                <span class="ms-1 d-none d-sm-inline">Home</span>
+                            </div>
+                        </a>
+                    </li>
+                     -->
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle dropdown-toggle"">
+                            <i class="fa fa-dashboard" title="Monitoring Sensor"></i> <span class=" ms-1 d-none d-sm-inline mobile-text">Monitoring Sensor</span> </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link align-middle px-0 text-white">
+                                    <i class="fa fa-thermometer" title="DHT22"></i> <span class="ms-1 d-none d-sm-inline">DHT 22</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link align-middle px-0 text-white">
+                                    <i class='bx bx-user-voice'title="Kebisingan"></i> <span class="ms-1 d-none d-sm-inline">Kebisingan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun' title="LUX"></i> <span class="ms-1 d-none d-sm-inline">LUX</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun 'title="Amonia"></i> <span class="ms-1 d-none d-sm-inline">Amonia</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link align-middle px-0 text-white">
+                                    <i class='fas fa-sun' title="Debu"></i> <span class="ms-1 d-none d-sm-inline">Debu</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0 align-middle">
+                            <i class='fa fa-info-circle' title="Informasi"></i></i> <span class="ms-1 d-none d-sm-inline ">Informasi</span></a>
+                    </li>
+                
+                    <!-- <li>
+                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle dropdown-toggle">
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span> </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0 align-middle">
+                            <i class="fa fa-sign-in"></i> <span class="ms-1 d-none d-sm-inline">Tim Kami</span> </a>
+                    </li> -->
+                </ul>
+                <hr>
+                <div class="dropdown pb-4 ">
+                    <a href="#" class="d-flex px-0 align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="data:image/png;base64,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" alt="user" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-4" title="User">User</span>
+                        
+                    </a>
+
+                    
+                
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        <li><a class="dropdown-item" href="/"> <i class="fa fa-sign-in"></i> Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col py-2">
+                <div class="cardlist mb-0 ">
+                    <div class="card-content" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <img src="/images/svipb.png" style="width: 200px; height: auto;">
+                        
+                        <!-- <h3 class="mb-0" style="font-size: 20px;">Home</h3> -->
+                    </div>
+                </div>
+
+                <h3 class="text-small font-bold mb-4 break-words mt-3 text-blue px-3">
+                    <span class=" text-white px-2 py-1 md:inline-block  " style="background-color: #303131; ">Sensor Lux</span>
+                </h3>
+
+                <section id="scoreCard" class="py-3">
+                    <div class="container position-relative">
+                        <div class="container">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-lg-6 col-12">
+                                    <div class="card h-100 border-0 shadow py-3" style="background-color: #b5b6c0;">
+                                       <h3 class="text-center">
+                                        Kebisingan Meter
+                                        </h3>
+                                        <form class="d-flex flex-column align-items-center justify-content-center">
+                                            <label for="score">Enter score out of 100</label>
+                                            <input type="text" name="" id="score" value="0" oninput="getScore()">
+                              <span id="error" class="text-danger d-none">Enter score value between 0 and 100 only</span>
+                                        </form>
+                                        <div
+                                            class="card-body overflow-hidden p-0 d-flex justify-content-center mx-3 my-4 text-center">
+                                            <div
+                                                class="score-meter position-relative rounded-circle d-flex align-items-center justify-content-center">
+                                                <div
+                                                    class="inner-score rounded-circle d-flex align-items-center justify-content-center">
+                                                    <div class="white-circle overflow-hidden bg-white rounded-circle">
+                                                        <div
+                                                            class="rotation position-relative d-flex align-items-end justify-content-center">
+                                                            <div class="needle rounded-5 rounded-bottom position-absolute"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="text-center" id="scoreText">Tingat kebisingan adalah 0 dB</h4>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="card h-100 border-0 shadow py-3">
+                                       <h3 class="text-center">
+                                        Kebisingan Meter 2
+                                        </h3>
+                                        
+                                        <h4 class="text-center" id="scoreText">Tingat kebisingan adalah 0 dB</h4>
+                                    </div>
+                                </div>
+
+                                  <div class="col-lg-6 col-12">
+                                    <div class="card h-100 border-0 shadow py-3">
+                                       <h3 class="text-center">
+                                        Kebisingan Meter 2
+                                        </h3>
+                                        
+                                        <h4 class="text-center" id="scoreText">Tingat kebisingan adalah 0 dB</h4>
+                                    </div>
+                                </div>
+                               
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                </section>
+               
+
+                
+                <div class="mx-auto" style="width: 200px; ">
+                    @IoT Intern MTM
+                </div>
+            </div>
+            
+            
+        
+        
+        
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script>
+    function getScore() {
+        setTimeout(() => {
+            let element = document.querySelector(":root");
+            // add the score value out of 100
+            let score = document.querySelector('#score').value;
+            if (score <= 100) {
+                document.querySelector('#error').classList.add("d-none");
+                let angle = (score / 100) * 180;
+                element.style.setProperty('--rotate-angle', angle + 'deg');
+                element.style.setProperty('--translate-rotate', (angle - 90) + 'deg');
+                element.style.setProperty('--translate-x', (angle - 90) + 'px');
+                if (score > 50) {
+                    element.style.setProperty('--translate-y', (angle - 85) + 'px');
+                }
+                else if (score < 50) {
+                    element.style.setProperty('--translate-y', (90 - angle) + 'px');
+                }
+                element.style.setProperty('--gradient-score', score + '%');
+                document.querySelector("#scoreText").innerHTML = "Tingkat Kebisingan adalah " + score + "dB";
+            }
+            else if (score > 100) {
+                document.querySelector('#error').classList.remove("d-none");
+            }
+        }, 1000);
+    }
+</script>

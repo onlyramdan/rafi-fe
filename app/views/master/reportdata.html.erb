@@ -1,0 +1,487 @@
+<!-- Include jQuery -->
+
+<!-- DataTables Core CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css">
+
+<!-- DataTables DateTime Plugin CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.5.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<style>
+    thead tr td{
+        background-color: rgba(89, 100, 118, 0.7) !important;
+    }
+
+    /* .card-body{
+      background-color: rgb(66, 115, 137);
+    } */
+    @media (max-width: 767px) {
+    .table-responsive {
+    overflow-x: auto;
+    }
+    
+    .table {
+    min-width: 100%; /* Mencegah tabel terlalu kecil */
+    }
+/*   
+    /* Sesuaikan lebar kolom jika diperlukan */
+    .table td {
+      white-space: nowrap; /* Mencegah teks terlalu panjang wrap */
+      } */
+    }
+    
+
+    /* Style for the search input container */
+    /* Custom styles for DataTables search and custom form */
+
+/* Style for the search input container */
+#tabel-report_filter {
+    margin-bottom: 20px; /* Adjust the margin as needed */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Align items to each end of the container */
+    background-color: #f8f9fa; /* Background color for the search input container */
+    padding: 10px; /* Padding for the search input container */
+    border-radius: 8px; /* Rounded corners */
+}
+
+  /* Style for the search input */
+  #tabel-report_filter input[type="search"] {
+      border: 1px solid #ccc; /* Border color */
+      padding: 5px 10px; /* Padding for the input */
+      border-radius: 5px; /* Rounded corners */
+      margin-right: 10px; /* Adjust the margin as needed */
+  }
+
+  /* Style for the search button */
+  #tabel-report_filter button {
+      background-color: #007bff; /* Button background color */
+      color: #fff; /* Button text color */
+      border: 1px solid #007bff; /* Button border color */
+      border-radius: 5px; /* Rounded corners */
+      padding: 5px 10px; /* Padding for the button */
+  }
+
+  /* Adjust the position of the search input and button if needed */
+  #tabel-report_filter {
+      display: flex;
+      align-items: center;
+  }
+
+  #tabel-report_filter label {
+      flex: 1;
+  }
+
+
+        /* Style for the table header row */
+        #tabel-report thead th {
+            background-color: #3498db; /* Header background color */
+            color: #fff; /* Header text color */
+            border: 1px solid #2980b9; /* Header border color */
+        }
+
+        /* Style for the table body rows */
+        #tabel-report tbody tr {
+            background-color: #ecf0f1; /* Body row background color */
+        }
+
+        /* Style for the odd rows in the table body */
+        #tabel-report tbody tr.odd {
+            background-color: #d0d3d4; /* Odd row background color */
+        }
+
+        /* Style for the even rows in the table body */
+        #tabel-report tbody tr.even {
+            background-color: #bdc3c7; /* Even row background color */
+        }
+
+        /* Style for the selected row in the table */
+        #tabel-report tbody tr.selected {
+            background-color: #e74c3c; /* Selected row background color */
+            color: #fff; /* Selected row text color */
+        }
+
+        /* Custom styles for DataTables pagination */
+
+/* Style for the pagination container */
+#tabel-report_paginate {
+    margin-top: 10px; /* Adjust the margin as needed */
+    text-align: center; /* Center-align the pagination */
+}
+
+/* Style for the pagination buttons */
+#tabel-report_paginate .paginate_button {
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: 1px solid #007bff; /* Button border color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for the buttons */
+    margin: 0 2px; /* Adjust the margin between buttons */
+}
+
+/* Style for the active pagination button */
+#tabel-report_paginate .paginate_button.current {
+    background-color: #0056b3; /* Active button background color */
+}
+
+/* Style for the pagination button hover effect */
+#tabel-report_paginate .paginate_button:hover {
+    background-color: #0056b3; /* Hovered button background color */
+    color: #fff; /* Hovered button text color */
+}
+
+.responsive-table {
+    overflow-x: auto;
+}
+
+.responsive-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.responsive-table td, .responsive-table th {
+    padding: 10px;
+    border:none;
+    text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+    .responsive-table td, .responsive-table th {
+        display: block;
+        width: 100%;
+    }
+
+    .responsive-table tr {
+        margin-bottom: 15px;
+    }
+}
+
+
+</style>
+<div class="card text-center mt-4" style="border-radius: 2%;">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <p class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true" onclick="batal()">Data</p>
+        </li>
+        <li class="nav-item">
+          <p class="nav-link" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report" aria-selected="false" onclick="tabreport()">Reports</p>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content mt-3">
+        <div class="tab-pane active" id="data" role="tabpanel" aria-labelledby="data-tab">
+          <!-- <%= form_tag('/report', method: 'get') do %>
+            <%= select_tag :limit, options_for_select([5, 15, 'all'], params[:limit]), onchange: 'this.form.submit();' %>
+          <% end %> -->
+
+          <div class="row">
+            <div class="col text-start">
+              <div class="card-title"><h4><i class="fa fa-database"></i> Report Data</h4></div>
+              <!-- <form class="row g-2" id="dateFilterForm">
+                <div class="form-group col-auto">
+                    <div class="input-group">
+                        <input type="date" class="form-control" name="start" placeholder="Tanggal Awal" />
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">hingga</span>
+                        </div>
+                        <input type="date" class="form-control" name="end" placeholder="Tanggal Akhir" />
+                    </div>
+                </div>
+                <div class="form-group col-auto">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+              </form> -->
+              <div class="responsive-table">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Tanggal Awal :</td>
+                            <td><input type="text" id="min" name="min" fdprocessedid="jh7yca"></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Akhir :</td>
+                            <td><input type="text" id="max" name="max" fdprocessedid="dvrnd"></td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+            
+            <%# Table %>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mx-0" id="example" style="width:100%">
+                <thead class="thead border-1">
+                  <tr style="text-align: center; color: rgb(255, 255, 255);">
+                    <td>No.</td>
+                    <td>Tanggal</td>
+                    <td data-sort="true">Jam</td>
+                    <!-- <td>Waktu</td> -->
+                    <!-- <td>Suhu</td>
+                    <td>Kelembapan</td> -->
+                    <td data-sort="true">Kebisingan</td>
+                    <td data-sort="true">Lux</td>
+                    <td>Debu</td>
+                    <td>CO2</td>
+                    <!-- <td>Alat</td> -->
+                  </tr>
+                </thead>
+                <tbody>
+                <%if @data.present? 
+                @no = 0
+                %>
+                <% @data.each_with_index  do |data, index| %>
+                  <tr style="text-align: center;">
+                    <td><%= @no+= 1  %></td>
+                    <td><%= data['waktu']&.to_time&.strftime("%Y-%m-%d") %></td>
+                    <td><%= data['waktu']&.to_time&.strftime("%H:%M:%S") %></td>
+                    <!-- <td><%= data['waktu'] %></td> -->
+                    <td><%= data['kebisingan'] %></td>
+                    <td><%= data['lux'] %></td>
+                    <td><%= data['debu'] %></td>
+                    <td><%= data['amonia'] %></td>
+                    <!-- <td><%= data['alat'] %></td> -->
+                  </tr>
+                  <%end%>
+                <% else %>
+                  <tr>
+                    <td class="text-center" colspan="9">Data Monitoring Kosong!</td>
+                  </tr>
+                <%end%>
+                </tbody>
+              </table>
+              
+              <!-- <a href="<%= download_pdf_path %>" class="btn btn-primary">Unduh PDF</a> -->
+              <button class="btn btn-primary" id="download-pdf">Unduh PDF</button>
+            </div>
+            <%# Akhir Table %>
+            </div>
+          </div>
+          <!-- <div>
+            <ul class="pagination">
+              <% if @meta['prev_page'].present? %>
+                <li class="page-item"><a class="page-link" href="?page=<%= @meta['prev_page'].to_s %>">Previous</a></li>
+              <% end %>
+          
+              <% if @meta['total_pages'].to_i > 1 %>
+                <% (1..@meta['total_pages'].to_i).each do |i| %>
+                  <li class="page-item <%= (@meta['current_page'].to_i == i) ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i.to_s %>"><%= i %></a>
+                  </li>
+                <% end %>
+              <% end %>
+          
+              <% if @meta['next_page'].present? %>
+                <li class="page-item"><a class="page-link" href="?page=<%= @meta['next_page'].to_s %>">Next</a></li>
+              <% end %>
+            </ul>
+          </div> -->
+
+          <button id="cetakPdfButton" class="btn btn-success hide-on-print" onclick="cetakHalaman()">Cetak PDF</button>
+          
+          
+     
+        </div>
+        <div class="tab-pane" id="report" role="tabpanel" aria-labelledby="report-tab">
+          <div class="card-title"><h4><i class="fa fa-database"></i> Sortir Data</h4></div>
+          <form id="form-data" action="/export" method="get">
+            <div class="mb-3">
+              <label for="tgl_mulai" class="form-label ">Tanggal Awal</label>
+              <input type="date" id="tgl_mulai" class="form-control" name="tgl_mulai" >
+            </div>
+              
+           
+            <div class="mb-3">
+              <label for="tgl_akhir" class="form-label ">Tanggal Akhir</label>
+              <input type="date" id="tgl_akhir" class="form-control" name="tgl_akhir" required ="true">
+            </div>
+            
+            <button  class="btn btn-primary" id="save-button" title="Simpan" onclick="csv()"><i class="fa fa-download"></i> Download Excel</button>
+            <!-- <%= button_to 'Save Work', '#', class: 'btn btn-primary', id: 'save-button' %> -->
+
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  // function csv() {
+  //   var tgl_mulai = $("#tgl_mulai").val();
+  //   var tgl_akhir = $("#tgl_akhir").val();
+
+  //   // Konversi nilai tanggal menjadi objek Date
+  //   var startDate = new Date(tgl_mulai);
+  //   var endDate = new Date(tgl_akhir);
+
+  //   if (tgl_mulai === "" || tgl_akhir === "") {
+  //     alert("Masukkan Tanggal Mulai dan Tanggal Akhir");
+  //   } else if (startDate >= endDate) {
+  //     alert("Tanggal Akhir harus lebih besar dari Tanggal Mulai");
+  //   } else {
+  //     var data_form = $('#form-data').serialize();
+  //     const url = `/export?${data_form}`;
+  //     window.location.href = url;
+  //   }
+  // }
+
+  // function csv(){
+  //   var data_form = $('#form-data').serialize();
+  //   var tgl_mulai = $("#tgl_mulai").val();
+  //   var tgl_akhir = $("#tgl_akhir").val();
+  //   if (tgl_mulai === "" && tgl_akhir === "") {
+  //     alert("Masukkan Tanggal Mulai dan Tanggal Akhir");
+  //   } else {    
+  //     const url = `/export?${data_form}`;
+  //     window.location.href = url;
+  //   }
+  // }   
+  function csv() {
+    var tgl_mulai = $("#tgl_mulai").val();
+    var tgl_akhir = $("#tgl_akhir").val();
+    
+    if (tgl_mulai === "" && tgl_akhir === "") {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Masukkan Tanggal Mulai dan Tanggal Akhir',
+      });
+    } else {
+      // Serialize form data
+      var data_form = $('#form-data').serialize();
+      
+      // Append tanggal mulai dan tanggal akhir ke data form
+      data_form += `&tgl_mulai=${tgl_mulai}&tgl_akhir=${tgl_akhir}`;
+
+      // Construct the URL with the additional parameters
+      const url = `/export?${data_form}`;
+
+      // Redirect to the URL with parameters
+      window.location.href = url;
+    }
+  }
+
+
+
+  function batal() {
+      $('#data-tab').tab('show');
+  }
+  function tabreport() {
+      $('#report-tab').tab('show');
+  }
+
+  function cetakHalaman() {
+    window.print();
+  }
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Include DataTables CSS and JS files -->
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+
+
+<script>
+  $(document).ready(function() {
+      var table = $('#tabel-report').DataTable({
+          "order": [[2, 'asc']], // Initial sorting configuration
+          "buttons": [
+              'copy', 'excel', 'pdf' // Tambahkan tombol ekspor PDF dan Excel
+          ]
+      });
+
+      // Handle form submission to update DataTable search
+      $('#tabel-report_filter input[type="search"]').on('input', function() {
+          table.search(this.value).draw();
+      });
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- Your JavaScript script for date filtering -->
+
+<script src="https://cdn.datatables.net/2.0.1/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.5.2/js/dataTables.dateTime.min.js"></script>
+<script>
+   
+// Custom filtering function which will search data in column four between two values
+  DataTable.ext.search.push(function (settings, data, dataIndex) {
+      let min = minDate.val();
+      let max = maxDate.val();
+      let date = new Date(data[1]);
+  
+      if (
+          (min === null && max === null) ||
+          (min === null && date <= max) ||
+          (min <= date && max === null) ||
+          (min <= date && date <= max)
+      ) {
+          return true;
+      }
+      return false;
+  });
+  
+  // Create date inputs
+  minDate = new DateTime('#min', {
+      format: 'MMMM Do YYYY'
+  });
+  maxDate = new DateTime('#max', {
+      format: 'MMMM Do YYYY'
+  });
+  
+  // DataTables initialisation
+  let table = new DataTable('#example');
+  
+  // Refilter the table
+  document.querySelectorAll('#min, #max').forEach((el) => {
+      el.addEventListener('change', () => table.draw());
+  });
+</script>
+<!-- Load pdfmake script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+<script>
+    function generatePDF() {
+        var table = document.getElementById('example');
+        var rows = Array.from(table.rows);
+        var docDefinition = {
+            content: [
+                { text: 'Data Monitoring', style: 'header' },
+                {
+                    table: {
+                        headerRows: 1,
+                        widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                        body: [
+                            ['No.', 'Tanggal', 'Jam', 'Kebisingan', 'Lux', 'Debu', 'CO2'],
+                            ...rows.slice(1).map(row =>
+                                Array.from(row.cells).map(cell => cell.textContent)
+                            )
+                        ]
+                    }
+                }
+            ],
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    alignment: 'center',
+                    margin: [0, 0, 0, 10]
+                }
+            }
+        };
+
+        pdfmake.createPdf(docDefinition).download('data_monitoring.pdf');
+    }
+
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        generatePDF();
+    });
+</script>
